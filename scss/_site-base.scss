@@ -3,7 +3,7 @@ html {
 }
 body {
 	line-height: 1.7;
-	color: lighten($black, 50%);
+	color: lighten($black, 40%);
 	font-weight: 400;
 	font-size: $font-size-base;
 }
@@ -24,7 +24,8 @@ a {
 
 h1, h2, h3, h4, h5,
 .h1, .h2, .h3, .h4, .h5 {
-	font-family: $font-family-sans-serif;
+	font-family: $font-family-2;
+	color: $black;
 }
 
 .border-2 {
@@ -119,7 +120,7 @@ body {
 .site-section {
 	padding: 2.5em 0;
 	@include media-breakpoint-up(md) {
-		padding: 5em 0;
+		padding: 7em 0;
 	}
 
 	&.site-section-sm {
