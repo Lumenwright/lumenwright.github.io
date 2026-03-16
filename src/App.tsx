@@ -5,6 +5,8 @@ import HeroSection from './components/HeroSection';
 import AboutSection from './components/AboutSection';
 import ProjectsSection from './components/ProjectsSection';
 import Footer from './components/Footer';
+import lightProjects from './data/projects-light.json';
+import darkProjects from './data/projects-dark.json';
 
 function App() {
   return (
@@ -13,14 +15,14 @@ function App() {
       lightContent={
         <>
           <AboutSection />
-          <ProjectsSection />
+          <ProjectsSection projects={lightProjects} />
           <Footer />
         </>
       }
       darkHero={<HeroSection title="LUMENWRIGHT" subtitle="Music producer and Twitch DJ" />}
       darkContent={
         <>
-          <ProjectsSection />
+          <ProjectsSection projects={darkProjects} />
           <Footer />
         </>
       }
