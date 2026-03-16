@@ -1,31 +1,33 @@
 interface NavItemProps {
-  href: string;
   label: string;
+  onClick: () => void;
 }
 
-function NavItem({ href, label }: NavItemProps) {
+function NavItem({ label, onClick }: NavItemProps) {
   return (
     <li className="nav-item">
-      <a className="nav-link" href={href}>{label}</a>
+      <button className="nav-link btn btn-link text-white" onClick={onClick}>
+        {label}
+      </button>
     </li>
   );
 }
 
-function NavBar() {
+interface NavBarProps {
+  onLightClick: () => void;
+  onDarkClick: () => void;
+}
+
+function NavBar({ onLightClick, onDarkClick }: NavBarProps) {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
-        <a className="navbar-brand" href="#home">Portfolio</a>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span className="navbar-toggler-icon"></span>
+        <button className="navbar-brand btn btn-link text-white" onClick={onLightClick}>
+          Portfolio
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
-            <NavItem href="#home" label="Home" />
-            <NavItem href="#about" label="About" />
-            <NavItem href="#projects" label="Projects" />
-            <NavItem href="#contact" label="Contact" />
-          </ul>
+        <div className="navbar-nav ms-auto d-flex flex-row">
+          <NavItem label="About" onClick={onLightClick} />
+          <NavItem label="Projects" onClick={onDarkClick} />
         </div>
       </div>
     </nav>

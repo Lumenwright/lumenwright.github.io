@@ -1,6 +1,6 @@
 import { ReactNode, CSSProperties } from 'react';
 import { useSplitScroll } from '../hooks/useSplitScroll';
-import Divider from './Divider';
+import NavBar from './NavBar';
 import styles from './SplitLayout.module.css';
 
 interface SplitLayoutProps {
@@ -25,7 +25,7 @@ function SplitLayout({ lightHero, lightContent, darkHero, darkContent }: SplitLa
         {lightHero}
         {activeSection === 'light' && lightContent}
       </div>
-      <Divider
+      <NavBar
         onLightClick={() => setActiveSection('light')}
         onDarkClick={() => setActiveSection('dark')}
       />
