@@ -5,8 +5,8 @@ function LightHeroSection() {
       style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
     >
       <div className="container">
-        <h1>Welcome to My Portfolio</h1>
-        <p className="lead">A minimalist showcase of my work</p>
+        <h1>ROSE CHUNG</h1>
+        <p className="lead">Software developer for immersive experiences</p>
       </div>
     </section>
   );

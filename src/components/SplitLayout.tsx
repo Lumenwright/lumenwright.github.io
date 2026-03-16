@@ -21,7 +21,14 @@ function SplitLayout({ lightHero, lightContent, darkHero, darkContent }: SplitLa
 
   return (
     <div style={{ visibility: ready ? 'visible' : 'hidden' }}>
-      <div className={styles.lightPanel} style={panelStyle(activeSection === 'light')}>
+      <div
+        className={styles.lightPanel}
+        style={{
+          ...panelStyle(activeSection === 'light'),
+          cursor: activeSection !== 'light' ? 'pointer' : 'default',
+        }}
+        onClick={activeSection !== 'light' ? () => setActiveSection('light') : undefined}
+      >
         {lightHero}
         {activeSection === 'light' && lightContent}
       </div>
@@ -29,7 +36,14 @@ function SplitLayout({ lightHero, lightContent, darkHero, darkContent }: SplitLa
         onLightClick={() => setActiveSection('light')}
         onDarkClick={() => setActiveSection('dark')}
       />
-      <div className={styles.darkPanel} style={panelStyle(activeSection === 'dark')}>
+      <div
+        className={styles.darkPanel}
+        style={{
+          ...panelStyle(activeSection === 'dark'),
+          cursor: activeSection !== 'dark' ? 'pointer' : 'default',
+        }}
+        onClick={activeSection !== 'dark' ? () => setActiveSection('dark') : undefined}
+      >
         {darkHero}
         {activeSection === 'dark' && darkContent}
       </div>
