@@ -1,0 +1,13 @@
+.lightPanel {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+.darkPanel {
+  display: flex;
+  flex-direction: column;
+  background-color: #0f172a;
+  color: #ffffff;
+}

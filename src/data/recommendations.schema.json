@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LinkedIn Recommendations",
+  "description": "Schema for validating a list of LinkedIn recommendations",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "title": "Recommendation",
+    "required": ["name", "tagline", "date", "workedWith", "review"],
+    "additionalProperties": false,
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Full name of the person giving the recommendation",
+        "minLength": 1
+      },
+      "tagline": {
+        "type": "string",
+        "description": "LinkedIn headline/tagline of the recommender",
+        "minLength": 1
+      },
+      "date": {
+        "type": "string",
+        "description": "Date the recommendation was written, in 'MMMM D, YYYY' format (e.g. 'March 15, 2026')",
+        "pattern": "^(January|February|March|April|May|June|July|August|September|October|November|December) ([1-9]|[12][0-9]|3[01]), \\d{4}$"
+      },
+      "workedWith": {
+        "type": "string",
+        "description": "Description of the working relationship between the recommender and the subject",
+        "minLength": 1
+      },
+      "review": {
+        "type": "string",
+        "description": "Full text of the recommendation",
+        "minLength": 1
+      }
+    }
+  },
+  "minItems": 1
+}
