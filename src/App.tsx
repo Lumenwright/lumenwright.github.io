@@ -7,7 +7,6 @@ import ProjectsSection from './components/ProjectsSection';
 import Footer from './components/Footer';
 import ContactSection from './components/ContactSection';
 import lightProjects from './data/projects-light.json';
-import darkProjects from './data/projects-dark.json';
 
 function App() {
   return (
