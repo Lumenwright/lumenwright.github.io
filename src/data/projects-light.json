@@ -12,7 +12,7 @@
     "company": "Transfr Inc.",
     "years": "2023–2026",
     "skills": ["Unity", "Asynchronous programming", "C#", "Oculus Quest", "Pico", "Unity Addressables"],
-    "description": "Transfr Trek is a live VR platform used by thousands of students. I maintained a Unity product SDK at the senior level, working in cross-functional teams and architecting key infrastructure.",
+    "description": "I architected, implemented, and maintained a custom asset bundle management system based on Unity Addressables to optimize load times and memory usage for our VR training platform. This system enabled dynamic content updates and improved performance across multiple VR devices for hundreds of customers. One of my key achievements was reducing download bandwidth by up to 90%.",
     "thumbnail": "/thumbnails/TransfrCoastalBend-hero.webp"
   },
   {
