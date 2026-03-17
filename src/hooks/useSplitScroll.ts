@@ -2,7 +2,7 @@ import { useState, useRef, useLayoutEffect, useEffect } from 'react';
 
 export type ActiveSection = 'light' | 'dark' | null;
 
-const SCROLL_DURATION_MS = 600;
+export const SCROLL_DURATION_MS = 600;
 
 // Dark panel starts immediately after the 50vh light panel + 2px divider line.
 const darkScrollTarget = () => window.innerHeight / 2 + 2;

@@ -1,5 +1,5 @@
 import { ReactNode, CSSProperties } from 'react';
-import { useSplitScroll } from '../hooks/useSplitScroll';
+import { useSplitScroll, SCROLL_DURATION_MS } from '../hooks/useSplitScroll';
 import NavBar from './NavBar';
 import styles from './SplitLayout.module.css';
 
@@ -16,8 +16,21 @@ function panelStyle(isActive: boolean): CSSProperties {
     : { height: '50vh', overflow: 'hidden' };
 }
 
+function scrollToId(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
 function SplitLayout({ lightHero, lightContent, darkHero, darkContent }: SplitLayoutProps) {
   const { activeSection, setActiveSection, ready } = useSplitScroll();
+
+  function expandLightThen(id: string) {
+    if (activeSection === 'light') {
+      scrollToId(id);
+    } else {
+      setActiveSection('light');
+      setTimeout(() => scrollToId(id), SCROLL_DURATION_MS + 100);
+    }
+  }
 
   return (
     <div style={{ visibility: ready ? 'visible' : 'hidden' }}>
@@ -33,8 +46,9 @@ function SplitLayout({ lightHero, lightContent, darkHero, darkContent }: SplitLa
         {activeSection === 'light' && lightContent}
       </div>
       <NavBar
-        onLightClick={() => setActiveSection('light')}
-        onDarkClick={() => setActiveSection('dark')}
+        onAboutClick={() => expandLightThen('about')}
+        onWorkClick={() => expandLightThen('projects')}
+        onMusicClick={() => setActiveSection('dark')}
       />
       <div
         className={styles.darkPanel}

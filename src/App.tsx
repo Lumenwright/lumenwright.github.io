@@ -11,7 +11,7 @@ import darkProjects from './data/projects-dark.json';
 function App() {
   return (
     <SplitLayout
-      lightHero={<HeroSection title="ROSE CHUNG" subtitle="Software developer for immersive experiences" />}
+      lightHero={<HeroSection title="ROSE CHUNG" subtitle="Senior Unity Developer · 8 years in real-time 3D" />}
       lightContent={
         <>
           <AboutSection />
