@@ -11,7 +11,7 @@ import darkProjects from './data/projects-dark.json';
 function App() {
   return (
     <SplitLayout
-      lightHero={<HeroSection title="ROSE CHUNG" subtitle="Senior Unity Developer · 8 years in real-time 3D" />}
+      lightHero={<HeroSection title="ROSE CHUNG" subtitle="Senior Unity/C# Developer · 8 years in real-time 3D" />}
       lightContent={
         <>
           <AboutSection />
@@ -19,10 +19,9 @@ function App() {
           <Footer />
         </>
       }
-      darkHero={<HeroSection title="LUMENWRIGHT" subtitle="Music producer and Twitch DJ" />}
+      darkHero={<HeroSection title="LUMENWRIGHT" subtitle="Music producer and Twitch DJ · 'The Oath' out now on FSOE" />}
       darkContent={
         <>
-          <ProjectsSection projects={darkProjects} />
           <Footer />
         </>
       }

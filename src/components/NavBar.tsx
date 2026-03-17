@@ -1,3 +1,5 @@
+import styles from './NavBar.module.css';
+
 interface NavItemProps {
   label: string;
   onClick: () => void;
@@ -21,7 +23,10 @@ export interface NavBarProps {
 
 function NavBar({ onAboutClick, onWorkClick, onMusicClick }: NavBarProps) {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className={`navbar navbar-expand-lg navbar-dark bg-dark ${styles.nav}`}>
+      <div className={styles.profileCircle}>
+        <img src="/cover-by-nikki.jpg" alt="Rose Chung" />
+      </div>
       <div className="container">
         <button className="navbar-brand btn btn-link text-white" onClick={onAboutClick}>
           Rose Chung
@@ -33,7 +38,7 @@ function NavBar({ onAboutClick, onWorkClick, onMusicClick }: NavBarProps) {
           <li className="nav-item">
             <a
               className="btn btn-outline-light btn-sm ms-2"
-              href="/resume.pdf"
+              href="/Rose Chung - resume - 2026.pdf"
               download
             >
               Resume
