@@ -1,5 +1,6 @@
 import SkillsGrid from './SkillsGrid';
 import EducationBlock from './EducationBlock';
+import RecommendationsSection from './RecommendationsSection';
 
 const bullets = [
   'Versatile senior Unity developer and former physicist',
@@ -26,6 +27,8 @@ function AboutSection() {
         <hr />
         <h5>Education</h5>
         <EducationBlock />
+        <hr />
+        <RecommendationsSection />
       </div>
     </section>
   );
