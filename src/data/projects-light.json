@@ -4,7 +4,7 @@
     "company": "Transfr Inc.",
     "years": "2023–2026",
     "skills": ["Unity", "C#", "Oculus Quest", "Pico", "WebGL", "REST API", "Azure DevOps"],
-    "description": "Transfr Trek is a live VR platform used by thousands of students. I maintained a Unity product SDK at the senior level, working in cross-functional teams and architecting key infrastructure.",
+    "description": "Transfr Trek is a live VR platform used by thousands of students in the US. I maintained a Unity product SDK at the senior level, working in cross-functional teams and architecting key infrastructure. I also followed up on and implemented feedback from SDK users, who were primarily XR designers working on simulations.",
     "thumbnail": "/thumbnails/TransfrCoastalBend-hero.webp"
   },
     {

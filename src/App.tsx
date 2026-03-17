@@ -5,6 +5,7 @@ import HeroSection from './components/HeroSection';
 import AboutSection from './components/AboutSection';
 import ProjectsSection from './components/ProjectsSection';
 import Footer from './components/Footer';
+import ContactSection from './components/ContactSection';
 import lightProjects from './data/projects-light.json';
 import darkProjects from './data/projects-dark.json';
 
@@ -16,6 +17,7 @@ function App() {
         <>
           <AboutSection />
           <ProjectsSection projects={lightProjects} />
+          <ContactSection />
           <Footer />
         </>
       }

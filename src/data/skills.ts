@@ -10,7 +10,7 @@ const skills: SkillCategory[] = [
   { category: 'Frameworks',   skills: ['React', 'Flask', 'Node.js', 'Express'] },
   { category: '3D Modeling',  skills: ['Blender'] },
   { category: 'Automation',   skills: ['Git', 'GitHub', 'Azure DevOps', 'Jenkins'] },
-  { category: 'One Day These Will Come In Handy, You Never Know', skills: ['Intel RealSense', 'Azure Kinect', 'OpenCV', 'PyTorch', 'Synthetic Data', 'ROS 2'] },
+  { category: 'One Day These Will Come In Handy, You Never Know', skills: ['Intel RealSense', 'Azure Kinect', 'OpenCV', 'PyTorch', 'Synthetic Data', 'ROS 2', 'GCP'] },
 ];
 
 export default skills;
