@@ -10,6 +10,21 @@
         "type": "string",
         "description": "Display name of the project"
       },
+      "company": {
+        "type": "string",
+        "description": "Company name associated with the project"
+      },
+      "years": {
+        "type": "string",
+        "description": "Years during which the project was active"
+      },
+      "skills": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "List of skills or technologies used in the project"
+      },
       "description": {
         "type": "string",
         "description": "Short description of the project"

@@ -1,17 +1,46 @@
 [
   {
-    "title": "Immersive Experience 1",
-    "description": "A placeholder description for a software project in the light section.",
-    "thumbnail": "/thumbnails/placeholder.png"
+    "title": "Transfr Trek",
+    "company": "Transfr",
+     "years": "2023-2026",
+     "skills": ["Unity", "C#", "VR", "SDK development", "cross-functional collaboration"],
+    "description": "I maintained a Unity product SDK at the senior level, working in cross-functional teams and architecting key infrastructure for a live VR product with thousands of users.",
+    "thumbnail": "/thumbnails/TransfrCoastalBend-hero.webp"
   },
   {
-    "title": "Immersive Experience 2",
-    "description": "A placeholder description for a software project in the light section.",
-    "thumbnail": "/thumbnails/placeholder.png"
+    "title": "Synthetic training data for real-time computer vision (Unity/NDA)",
+    "company": "Unity/NDA",
+    "years": "2022-2023",
+    "skills": ["Unity", "C#", "Computer Vision", "Machine Learning"],
+    "description": "I enabled the machine learning researchers on my team to apply novel CV and sensor fusion techniques in a real-time virtual 3D environment. I wrote compute shaders for some of these projects which involved sim-to-real ML obstacle avoidance training of a real world robot.",
+    "thumbnail": "/thumbnails/UnityLogo.jpg"
   },
   {
-    "title": "Immersive Experience 3",
-    "description": "A placeholder description for a software project in the light section.",
-    "thumbnail": "/thumbnails/placeholder.png"
+    "title": "AR assistant for retail application on the Hololens (Finger Food/Unity/NDA)",
+    "company": "Finger Food/Unity/NDA",
+    "years": "2019-2021",
+    "skills": ["Unity", "C#", "AR", "Hololens"],
+    "description": "I implemented and enabled innovation of novel UI/UX design by working closely on a design-led team. Optimization in Unity for the Hololens in a resource-heavy application was key. I will never hear \"bread, milk, eggs\" the same way again.",
+    "thumbnail": "/thumbnails/fingerfood-atg-logo.png"
+  },
+  {
+    "title": "Animated mascot for Twitch overlay (personal project)",
+    "description": "(2020) I made a swimming shark overlay in Unity for SomnaMusic, who is a Twitch Partner streamer.",
+    "thumbnail": "/thumbnails/sharktime.png"
+  },
+  {
+    "title": "Augmented Reality Business Card (MAMMOTH XR)",
+    "description": "(2019) Mobile AR business cards for myself and coworkers using Unity (Android/iOS) and the 8th Wall SDK. I also captured everyone's head using Intel RealSense photogrammetry.",
+    "thumbnail": "/thumbnails/MyARBusinessCard.gif"
+  },
+  {
+    "title": "Thunder (MAMMOTH XR)",
+    "description": "(2019) A Blackfoot language learning VR game for Oculus Go using Unity and the Oculus SDK. It was invited to the Vancouver and Nashville International Film Festivals in 2019. I also did sound design in Ableton.",
+    "thumbnail": "/thumbnails/Thunder-Postcard.jpg"
+  },
+  {
+    "title": "PASS (MAMMOTH XR)",
+    "description": "(2018) An Oculus Go port of MAMMOTH's fire extinguisher training in Unreal Engine 4. I did extensive optimization of the extinguishing mechanic and environments for mobile VR.",
+    "thumbnail": "/thumbnails/PASS-VR.png"
   }
 ]
