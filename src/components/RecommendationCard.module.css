@@ -9,6 +9,10 @@
   flex-direction: column;
 }
 
+.card:hover {
+  border-color: #1a431f;
+}
+
 .review {
   font-size: 0.9rem;
   line-height: 1.7;
