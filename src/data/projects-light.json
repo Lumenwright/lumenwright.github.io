@@ -21,7 +21,7 @@
     "years": "2022–2023",
     "skills": ["Unity", "C#", "HLSL", "Computer Vision", "Machine Learning", "WebSocket"],
     "description": "I enabled the machine learning researchers on my team to apply novel CV and sensor fusion techniques in a real-time virtual 3D environment. I wrote compute shaders for some of these projects which involved sim-to-real ML obstacle avoidance training of a real world robot.",
-    "thumbnail": "/thumbnails/UnityLogo.jpg"
+    "thumbnail": "/thumbnails/Unity_2021.svg"
   },
   {
     "title": "AR Assistant for Retail (Hololens)",
