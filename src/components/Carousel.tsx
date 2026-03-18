@@ -1,5 +1,7 @@
 import { ReactNode, useRef, useState, useEffect } from 'react';
 import styles from './Carousel.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 interface CarouselProps {
   children: ReactNode;
@@ -34,13 +36,13 @@ function Carousel({ children }: CarouselProps) {
   return (
     <div className={styles.wrapper}>
       <button className={styles.button} onClick={() => scroll('left')} disabled={atStart} aria-label="Previous">
-        ‹
+        <FontAwesomeIcon icon={faChevronLeft} />
       </button>
       <div ref={trackRef} className={styles.track}>
         {children}
       </div>
       <button className={styles.button} onClick={() => scroll('right')} disabled={atEnd} aria-label="Next">
-        ›
+        <FontAwesomeIcon icon={faChevronRight} />
       </button>
     </div>
   );
