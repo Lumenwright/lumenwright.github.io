@@ -1,7 +1,7 @@
 .divider {
   position: relative;
-  height: 2px;
-  background: #333;
+  height: 4px;
+  background: #bf9b30;
   overflow: visible;
   z-index: 10;
   /* hidden on desktop */

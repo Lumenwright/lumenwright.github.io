@@ -1,4 +1,5 @@
 import { Project } from '../types/project';
+import styles from './ProjectsSection.module.css';
 
 interface ProjectCardProps {
   project: Project;
@@ -7,11 +8,11 @@ interface ProjectCardProps {
 function ProjectCard({ project }: ProjectCardProps) {
   return (
     <div className="col-md-4 mb-4">
-      <div className="card h-100">
+      <div className={`card h-100 ${styles.card}`}>
         <img src={project.thumbnail} alt={project.title} className="card-img-top" />
         <div className="card-body">
           {(project.company || project.years) && (
-            <p className="card-subtitle mb-1 text-muted" style={{ fontSize: '0.8rem' }}>
+            <p className={`card-subtitle mb-1 ${styles.subtitle}`} style={{ fontSize: '0.8rem' }}>
               {[project.company, project.years].filter(Boolean).join(' · ')}
             </p>
           )}
@@ -23,7 +24,7 @@ function ProjectCard({ project }: ProjectCardProps) {
                 <span
                   key={skill}
                   className="badge rounded-pill"
-                  style={{ fontSize: '0.7rem', background: '#eee', color: '#444' }}
+                  style={{ fontSize: '0.7rem', background: '#bf9b30', color: '#081c09' }}
                 >
                   {skill}
                 </span>
@@ -42,9 +43,9 @@ interface ProjectsSectionProps {
 
 function ProjectsSection({ projects }: ProjectsSectionProps) {
   return (
-    <section id="projects" className="bg-light py-5">
+    <section id="projects" className={`py-5 ${styles.section}`}>
       <div className="container">
-        <h2>Work</h2>
+        <h2 className={styles.heading}>Work</h2>
         <div className="row">
           {projects.map((project) => (
             <ProjectCard key={project.title} project={project} />

@@ -3,7 +3,7 @@
   height: 144px;
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid white;
+  border: 3px solid #bf9b30;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
   pointer-events: none;
   flex-shrink: 0;

@@ -9,7 +9,7 @@ interface NavItemProps {
 function NavItem({ label, onClick }: NavItemProps) {
   return (
     <li className="nav-item">
-      <button className="nav-link btn btn-link text-white" onClick={onClick}>
+      <button className="nav-link btn btn-link" onClick={onClick}>
         {label}
       </button>
     </li>
@@ -25,7 +25,7 @@ export interface NavBarProps {
 
 function NavBar({ onAboutClick, onWorkClick, onMusicClick, onContactClick }: NavBarProps) {
   return (
-    <nav className={`navbar navbar-expand-lg navbar-dark bg-dark ${styles.nav}`}>
+    <nav className={`navbar navbar-expand-lg ${styles.nav}`}>
       <div className={styles.profileCircleWrapper}>
         <ProfileCircle />
       </div>
@@ -40,7 +40,7 @@ function NavBar({ onAboutClick, onWorkClick, onMusicClick, onContactClick }: Nav
           <NavItem label="Let's Talk!" onClick={onContactClick} />
           <li className="nav-item">
             <a
-              className="btn btn-outline-light btn-sm ms-2"
+              className={`btn btn-outline-light btn-sm ms-2 ${styles.resumeBtn}`}
               href="/Rose Chung - resume - 2026.pdf"
               download
             >

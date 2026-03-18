@@ -2,6 +2,8 @@
   position: relative;
   overflow: visible;
   z-index: 10;
+  background-color: #b39b30;
+  color: #1a431f;
 }
 
 .profileCircleWrapper {
@@ -10,6 +12,17 @@
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 11;
+}
+
+.resumeBtn {
+  color: #081c09 !important;
+  border-color: #081c09 !important;
+}
+
+.resumeBtn:hover {
+  background-color: #1a431f !important;
+  color: #e5e0d8 !important;
+  border-color: #e5e0d8 !important;
 }
 
 /* hidden on mobile — MobileDivider + FloatingMenu take over */

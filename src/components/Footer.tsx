@@ -1,8 +1,8 @@
 function Footer() {
   return (
-    <footer className="bg-dark text-white text-center py-5">
+    <footer className="text-center py-5" style={{ color: '#081c09', backgroundColor: '#b39b30', marginTop: 'auto' }}>
       <div className="container">
-        <p>View this website on GitHub: <a href="https://github.com/lumenwright" className="text-white">lumenwright</a></p>
+        <p>View this website on GitHub: <a href="https://github.com/lumenwright" style={{ color: '#081c09' }}>lumenwright</a></p>
       </div>
     </footer>
   );

@@ -1,0 +1,18 @@
+.section {
+  background-color: #e5e0d8;
+  color: #081c09;
+}
+
+.heading {
+  color: #1a431f;
+}
+
+.card {
+  border-color: #bf9b30;
+  background-color: #e5e0d8;
+  color: #081c09;
+}
+
+.subtitle {
+  color: #1a431f !important;
+}
