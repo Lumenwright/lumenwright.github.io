@@ -1,6 +1,8 @@
 import { ReactNode, CSSProperties } from 'react';
 import { useSplitScroll, SCROLL_DURATION_MS } from '../hooks/useSplitScroll';
 import NavBar from './NavBar';
+import MobileDivider from './MobileDivider';
+import FloatingMenu from './FloatingMenu';
 import styles from './SplitLayout.module.css';
 
 interface SplitLayoutProps {
@@ -49,6 +51,14 @@ function SplitLayout({ lightHero, lightContent, darkHero, darkContent }: SplitLa
         onAboutClick={() => expandLightThen('about')}
         onWorkClick={() => expandLightThen('projects')}
         onMusicClick={() => setActiveSection('dark')}
+        onContactClick={() => expandLightThen('contact')}
+      />
+      <MobileDivider />
+      <FloatingMenu
+        onAboutClick={() => expandLightThen('about')}
+        onWorkClick={() => expandLightThen('projects')}
+        onMusicClick={() => setActiveSection('dark')}
+        onContactClick={() => expandLightThen('contact')}
       />
       <div
         className={styles.darkPanel}

@@ -1,4 +1,5 @@
 import styles from './NavBar.module.css';
+import ProfileCircle from './ProfileCircle';
 
 interface NavItemProps {
   label: string;
@@ -19,13 +20,14 @@ export interface NavBarProps {
   onAboutClick: () => void;
   onWorkClick: () => void;
   onMusicClick: () => void;
+  onContactClick: () => void;
 }
 
-function NavBar({ onAboutClick, onWorkClick, onMusicClick }: NavBarProps) {
+function NavBar({ onAboutClick, onWorkClick, onMusicClick, onContactClick }: NavBarProps) {
   return (
     <nav className={`navbar navbar-expand-lg navbar-dark bg-dark ${styles.nav}`}>
-      <div className={styles.profileCircle}>
-        <img src="/cover-by-nikki.jpg" alt="Rose Chung" />
+      <div className={styles.profileCircleWrapper}>
+        <ProfileCircle />
       </div>
       <div className="container">
         <button className="navbar-brand btn btn-link text-white" onClick={onAboutClick}>
@@ -35,6 +37,7 @@ function NavBar({ onAboutClick, onWorkClick, onMusicClick }: NavBarProps) {
           <NavItem label="About" onClick={onAboutClick} />
           <NavItem label="Work" onClick={onWorkClick} />
           <NavItem label="Music" onClick={onMusicClick} />
+          <NavItem label="Let's Talk!" onClick={onContactClick} />
           <li className="nav-item">
             <a
               className="btn btn-outline-light btn-sm ms-2"

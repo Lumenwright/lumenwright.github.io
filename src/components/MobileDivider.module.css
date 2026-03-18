@@ -1,20 +1,23 @@
-.nav {
+.divider {
   position: relative;
+  height: 2px;
+  background: #333;
   overflow: visible;
   z-index: 10;
+  /* hidden on desktop */
+  display: none;
 }
 
-.profileCircleWrapper {
+.circleWrapper {
   position: absolute;
-  left: 50%;
   top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   z-index: 11;
 }
 
-/* hidden on mobile — MobileDivider + FloatingMenu take over */
 @media (max-width: 991px) {
-  .nav {
-    display: none;
+  .divider {
+    display: block;
   }
 }
