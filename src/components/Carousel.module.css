@@ -1,0 +1,53 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  gap: 1rem;
+  flex: 1;
+  /* Padding so box-shadows on cards aren't clipped */
+  padding: 0.5rem 0.25rem;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.track > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+.button {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+.button:hover {
+  background: #f0f0f0;
+  border-color: #999;
+}
+
+.button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
