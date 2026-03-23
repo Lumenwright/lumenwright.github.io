@@ -16,3 +16,9 @@
 .subtitle {
   color: #1a431f !important;
 }
+
+.project_btn {
+  background-color: #1a431f;
+  color: #e5e0d8;
+  border: none;
+}

@@ -32,7 +32,12 @@
       "thumbnail": {
         "type": "string",
         "description": "Path or URL to the project thumbnail image"
+      },
+      "externalLink": {
+        "type": "string",
+        "description": "Optional URL to an external resource related to the project"
       }
+
     },
     "additionalProperties": false
   }

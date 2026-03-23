@@ -45,7 +45,7 @@
     "company": "Finger Food / Unity",
     "years": "2019–2021",
     "skills": ["Unity", "C#", "AR", "HoloLens", "MRTK", "Jenkins"],
-    "description": "World-aware AR UI on the HoloLens, built on Microsoft's Mixed Reality Toolkit at a time when spatial UI conventions were still being invented. The interesting technical challenge was implementing designer visions for 3D UI movement and transitions in a resource-constrained environment, which required direct application of linear algebra and calculus rather than reaching for engine abstractions. Also built custom Unity editor tools that let designers and artists work more efficiently in the engine without needing an engineer present.",
+    "description": "World-aware AR UI on the HoloLens, built on Microsoft's Mixed Reality Toolkit at a time when spatial UI conventions were still being invented. The interesting technical challenge was implementing designer visions for 3D UI movement and transitions in a resource-constrained environment, which required direct application of linear algebra and calculus. Also built custom Unity editor tools that let designers and artists work more efficiently in the engine without needing an engineer present.",
     "thumbnail": "/thumbnails/fingerfood-atg-logo.png"
   },
   {

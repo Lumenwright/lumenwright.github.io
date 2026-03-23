@@ -18,6 +18,11 @@ function ProjectCard({ project }: ProjectCardProps) {
           )}
           <h5 className="card-title">{project.title}</h5>
           <p className="card-text">{project.description}</p>
+          {project.externalLink && (
+            <a href={project.externalLink} className={`${styles.project_btn} btn`} target="_blank" rel="noopener noreferrer">
+              View external link
+            </a>
+          )}
           {project.skills && project.skills.length > 0 && (
             <div className="d-flex flex-wrap gap-1 mt-2">
               {project.skills.map((skill) => (

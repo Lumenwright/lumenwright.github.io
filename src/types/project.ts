@@ -5,4 +5,5 @@ export interface Project {
   company?: string;
   years?: string;
   skills?: string[];
+  externalLink?: string;
 }
