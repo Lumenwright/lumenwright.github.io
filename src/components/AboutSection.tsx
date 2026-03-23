@@ -4,13 +4,11 @@ import RecommendationsSection from './RecommendationsSection';
 import { parseInlineBold } from '../utils/parseInlineBold';
 import styles from './AboutSection.module.css';
 
-const bullets = [
-  'Versatile **senior Unity developer** and **former physicist**',
-  '**8 years** building robust, data-driven, real-time 3D experiences',
-  'Described as **"resilient"**, **"compassionate"**, and **"hungry for knowledge"**',
-  'Prefers **design-led, full-stack teams**',
-  'Thrives on open-ended or **ambiguous problems** in **fast-paced environments**',
-  'Not afraid of quaternions or 3D math',
+const prose = [
+  "I came to software engineering from physics, and I still approach every problem the same way: understand the system before you change it.",
+  "**Eight years of Unity/C#** across VR, AR, digital twins, and live training products. **MSc in Physics.** Strong foundations in the 3D math that sits underneath most real-time graphics work.",
+  "What I'm told I do well: translating between engineers, designers, and leadership without losing anything in the translation. Spotting the actual problem before proposing a solution. Not letting design contradictions slide without a concrete resolution. Instigating the social and learning events that make a team more than the sum of its parts.",
+  "Currently open to roles in games, XR, and simulation. Not afraid of quaternions."
 ];
 
 function AboutSection() {
@@ -19,8 +17,8 @@ function AboutSection() {
       <div className="container">
         <h2>Who am I?</h2>
         <ul className={styles.list}>
-          {bullets.map((b) => (
-            <li key={b}>{parseInlineBold(b)}</li>
+          {prose.map((b) => (
+            <p key={b}>{parseInlineBold(b)}</p>
           ))}
         </ul>
         <hr />

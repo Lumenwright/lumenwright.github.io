@@ -11,6 +11,7 @@ function EducationBlock() {
             <span className={styles.degree}>{entry.degree}</span>
           </div>
           <span className={styles.years}>{entry.years}</span>
+          <p className={styles.description}>{entry.description}</p>
         </div>
       ))}
     </div>
