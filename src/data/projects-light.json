@@ -12,7 +12,7 @@
     "company": "Transfr Inc.",
     "years": "2023–2026",
     "skills": ["Unity", "C#", "Unity Addressables", "Asynchronous programming", "Oculus Quest", "Pico"],
-    "description": "The infrastructure responsible for getting simulation content onto VR devices reliably and efficiently. I built this system from the ground up and owned it end-to-end, serving as the architectural decision-maker for how engineers across teams used and extended it. The most significant architectural decision was supporting both local (on-device) and remote (CDN) content sources through a single catalog file, which demonstrated a path to 90% reduction in content patch sizes for customers. Later improvements included async loading architecture, bitmask-based status reporting, and download UI that surfaced wifi loss and loading state to users who previously had no visibility into what was happening.",
+    "description": "The infrastructure responsible for getting simulation content onto VR devices reliably and efficiently. I built this system from the ground up and owned it end-to-end, serving as the architectural decision-maker for how engineers across teams used and extended it. The most significant architectural decisions were supporting both local (on-device) and remote (CDN) content sources through a single catalog file per simulation, and demonstrating a path to 90% reduction in content patch sizes for customers. Later improvements included async loading architecture, bitmask-based status reporting, and download UI that surfaced wifi loss and loading state to users who previously had no visibility into what was happening.",
     "thumbnail": "/thumbnails/TransfrCoastalBend-hero.webp"
   },
   {
