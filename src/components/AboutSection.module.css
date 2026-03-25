@@ -1,3 +1,27 @@
 .list {
   color: #081c09;
 }
+
+.techWritingList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.techWritingEntry {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.techWritingTitle {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.techWritingDescription {
+  font-size: 0.85rem;
+  color: #081c09;
+  margin: 0;
+}

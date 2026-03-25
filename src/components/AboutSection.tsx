@@ -2,6 +2,7 @@ import SkillsGrid from './SkillsGrid';
 import EducationBlock from './EducationBlock';
 import RecommendationsSection from './RecommendationsSection';
 import { parseInlineBold } from '../utils/parseInlineBold';
+import technicalWriting from '../data/technical-writing';
 import styles from './AboutSection.module.css';
 
 const prose = [
@@ -27,6 +28,19 @@ function AboutSection() {
         <hr />
         <h5>Education</h5>
         <EducationBlock />
+        <hr />
+        <h5>Technical Writing</h5>
+        <div className={styles.techWritingList}>
+          {technicalWriting.map((entry) => (
+            <div key={entry.title} className={styles.techWritingEntry}>
+              {entry.url
+                ? <a href={entry.url} className={styles.techWritingTitle}>{entry.title}</a>
+                : <span className={styles.techWritingTitle}>{entry.title}</span>
+              }
+              <p className={styles.techWritingDescription}>{entry.description}</p>
+            </div>
+          ))}
+        </div>
         <hr />
         <RecommendationsSection />
       </div>

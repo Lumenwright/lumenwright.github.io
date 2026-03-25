@@ -1,72 +1,37 @@
 [
   {
     "name": "Vasyl Latushko",
-    "tagline": "Senior Backend & Platform Engineer | Cloud Infrastructure (AWS/GCP) | Terraform | Applied AI Systems",
+    "tagline": "Senior Backend & Platform Engineer, Transfr",
     "date": "March 15, 2026",
-    "workedWith": "Vasyl worked with Rose on the same team",
-    "review": "Working alongside Rose is a consistently smooth and grounding experience — they genuinely embody the principle: \"slow is smooth, smooth is fast.\" Rose picks up new technologies quickly as needed and applies them with strong fundamentals, which makes them reliable across shifting project demands.\n\nRose will never stay silent when they spot contradictions in a feature design. Rather than dismissing an approach with a simple \"it won't work,\" they take time to think it through and come back with a concrete perspective on how to resolve it — a habit that consistently improves the quality of what gets built.\n\nI'd recommend working with Rose without hesitation, and I'd jump at any chance to be on the same team again."
+    "workedWith": "Same team at Transfr",
+    "review": "Working alongside Rose is a consistently smooth and grounding experience — they genuinely embody the principle: 'slow is smooth, smooth is fast.' Rose picks up new technologies quickly as needed and applies them with strong fundamentals, which makes them reliable across shifting project demands. Rose will never stay silent when they spot contradictions in a feature design. Rather than dismissing an approach with a simple 'it won't work,' they take time to think it through and come back with a concrete perspective on how to resolve it — a habit that consistently improves the quality of what gets built. I'd recommend working with Rose without hesitation, and I'd jump at any chance to be on the same team again."
+  },
+  {
+    "name": "Matt Wehner",
+    "tagline": "Technical Artist, Unity Technologies",
+    "date": "March 18, 2026",
+    "workedWith": "Same team at Unity Technologies",
+    "review": "Rose is your friendly neighbourhood technical expert you'd regret not having on your team. When I got stuck on a difficult problem Rose was often the first person I'd shoulder tap to help me figure it out. Their ability to help identify the ACTUAL problem, simplify complex ideas down to actionable tasks, and communicate clearly at each step meant we wouldn't just solve the problem at hand but come away with a better solution and increased confidence going into the next one."
   },
   {
     "name": "Lisa Szolovits",
-    "tagline": "Immersive Tech/XR Designer & Developer | Unity/C#",
+    "tagline": "XR Designer & Developer, Transfr",
     "date": "March 14, 2026",
-    "workedWith": "Lisa worked with Rose but on different teams",
-    "review": "I loved working with Rose whenever we were paired up to work on features for Transfr's sim-building SDK. They were a skillful communicator: effortlessly distilling complex technical ideas, great at zeroing in on the problems to solve, and clearly laying out how to test their updates. From my perspective as a designer and sim developer using the SDK, I found Rose to be an empathetic collaborator, striving to deeply understand my challenges in using the tools and working determinedly to alleviate them. On top of all this, Rose is a positive presence on the team with their calm, friendly demeanor and welcome updates on their many interesting creative pursuits outside of work. I hope our paths cross again!"
-  },
-  {
-    "name": "Sandy Deal, PMP, CSM",
-    "tagline": "Technical Project & Program Manager | PMP® & CSM® | The \"Chaos Whisperer\" for High-Growth Engineering Teams",
-    "date": "March 13, 2026",
-    "workedWith": "Sandy worked with Rose but on different teams",
-    "review": "Rose is a rare find who balances masterful soft skills with boundless creativity. They weren't just a teammate; they were a pillar of our ERG communities, consistently driving inclusion with a genuine passion that made a real impact on our culture. Rose has an incredible ability to navigate complex dynamics with empathy and a fresh perspective that both unblocks teams and inspires new ideas. Any organization would be lucky to have their unique blend of heart, hustle, and cultural leadership."
+    "workedWith": "Different teams at Transfr",
+    "review": "I loved working with Rose whenever we were paired up to work on features for Transfr's sim-building SDK. They were a skillful communicator: effortlessly distilling complex technical ideas, great at zeroing in on the problems to solve, and clearly laying out how to test their updates. From my perspective as a designer and sim developer using the SDK, I found Rose to be an empathetic collaborator, striving to deeply understand my challenges in using the tools and working determinedly to alleviate them. On top of all this, Rose is a positive presence on the team with their calm, friendly demeanor and welcome updates on their many interesting creative pursuits outside of work."
   },
   {
     "name": "Ben Snowden",
-    "tagline": "Sr. XR Software Engineer | Unity | VR/AR | Multiplayer & Networking | C# | Open to Work",
+    "tagline": "Sr. XR Software Engineer, Transfr",
     "date": "March 12, 2026",
-    "workedWith": "Ben worked with Rose on the same team",
-    "review": "I worked with Rose at Transfr where they were a Senior Engineer on XR applications. During our time together they helped bring me up to speed on some of the platform's core systems and guided me through a refactor, and it was clear pretty quickly that they had a strong command of the codebase and the technology around it.\n\nThey were patient, creative, and easy to work with. The kind of person who shares what they know without hesitation. Any team would be lucky to have them."
+    "workedWith": "Same team at Transfr",
+    "review": "I worked with Rose at Transfr where they were a Senior Engineer on XR applications. During our time together they helped bring me up to speed on some of the platform's core systems and guided me through a refactor, and it was clear pretty quickly that they had a strong command of the codebase and the technology around it. They were patient, creative, and easy to work with. The kind of person who shares what they know without hesitation. Any team would be lucky to have them."
   },
   {
-    "name": "Sean Feeser",
-    "tagline": "Unity XR Developer",
-    "date": "March 11, 2026",
-    "workedWith": "Sean worked with Rose on the same team",
-    "review": "Rose is a very intelligent and talented engineer. While working with them, they would oversee the entire development of features from concept to delivery while providing smooth integration. They are always looking for ways to improve the product by expanding their personal skills. Even if it meant putting in a little extra time on unofficial projects, they are passionate about working hard to achieve the desired results."
-  },
-  {
-    "name": "Morgan James",
-    "tagline": "Senior Unity / XR Developer | Full-Stack Interactive Application Development | Passionate About Immersive Learning",
-    "date": "October 29, 2025",
-    "workedWith": "Morgan worked with Rose on the same team",
-    "review": "It is with immense pleasure that I recommend Rose Chung, a Senior Engineer and essential collaborator on our most challenging XR/VR projects. Rose possesses a remarkable capacity for rapid subject matter acquisition, consistently becoming our go-to expert on complex, emerging technologies. Their engineering depth is matched by an unwavering resilience; they are relentless in delving deep into the unknown and refuse to give up when faced with difficult, foundational problems, making them critical for project continuity. Furthermore, Rose is an exceptional communicator, adept at translating sophisticated technical concepts into clear, actionable terms for both engineering peers and leadership, which significantly elevates the technical literacy across the entire team. They are a resilient, brilliant, and indispensable force for innovation, and I strongly recommend them for any role requiring technical leadership and deep expertise."
-  },
-  {
-    "name": "David Gordon",
-    "tagline": "AI systems whisperer.",
-    "date": "July 4, 2023",
-    "workedWith": "David managed Rose directly",
-    "review": "I have worked with Rose on several projects over the last 4 years and, more recently, as one of my direct reports. During that time, Rose gravitated towards the most challenging Unity projects in AR, VR and industrial systems. They were capable of taking on difficult tasks and solving problems, and were always keen to learn on the job. In the last year in particular, Rose was working on several synthetic data projects, completing key tasks in Unity which unlocked the potential of the ML teams that Rose was working with."
-  },
-  {
-    "name": "Giorgio Gallina",
-    "tagline": "Business Owner | Machine Learning Engineer and Consultant | Engineering Manager",
-    "date": "June 16, 2023",
-    "workedWith": "Giorgio worked with Rose on the same team",
-    "review": "I worked with Rose in a few, very complex, ML projects. It would have been impossible to achieve good results in this projects without Rose providing the ML team I with high quality synthetic datasets generated by them with Unity. During the time we worked together I appreciated Rose's ability as a software engineer expert in Unity programming and synthetic dataset generation using Unity Perception, but also their ability to communicate effectively with the ML team.\n\nI highly recommend them, particularly to any ML team who need their expertise in synthetic data generation for training Computer Vision models."
-  },
-  {
-    "name": "Parisa Alvandi",
-    "tagline": "Research Scientist | 3D Vision & Neural Representations | Generative AI · Spatial AI",
-    "date": "June 13, 2023",
-    "workedWith": "Parisa worked with Rose on the same team",
-    "review": "I highly recommend Rose due to her great enthusiasm and passion for exploring emerging technologies, particularly AI. Rose consistently demonstrates a remarkable eagerness to learn and grow. Notably, she thrives in collaborative settings and exhibits a strong commitment to meeting deadlines, ensuring the team's objectives are met. I have personally benefited from Rose's supportive nature and valuable constructive feedback, which further exemplify her dedication and ability to contribute effectively."
-  },
-  {
-    "name": "Parya Momayyez-Siahkal",
-    "tagline": "Principal Imaging Scientist @ Roche | PhD, Computer Vision, Machine Learning, Deep Learning",
-    "date": "June 12, 2023",
-    "workedWith": "Parya worked with Rose on the same team",
-    "review": "I highly recommend Rose as a software engineer. They are a motivated and dedicated professional with excellent communication skills and a quick grasp of new concepts. We had a brief but impactful collaboration during which they always had a positive attitude, and a willingness to support the team. It was a pleasure working with Rose and I am confident that they will excel in any future endeavor. I strongly endorse Rose for any suitable opportunities."
+    "name": "Elena Glazkova",
+    "tagline": "Creative Technologist, Senior Technical Program Manager",
+    "date": "March 19, 2026",
+    "workedWith": "Same team at Transfr",
+    "review": "I had the pleasure of working with Rose and can confidently say they are a fantastic teammate. Rose brings a thoughtful, proactive approach to problem-solving, often anticipating challenges early and coming up with creative, well-structured solutions. What really stands out is how Rose shows up for the team. They are not only reliable and easy to collaborate with, but also bring a sense of warmth and creativity into everyday work — whether it's small touches like sharing music to set the mood in standups or simply making the space feel more human and connected. Rose communicates clearly, supports their teammates, and helps create a positive, collaborative environment. Rose combines strong technical skills with emotional intelligence, which makes them an invaluable addition to any team."
   }
 ]
