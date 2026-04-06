@@ -22,7 +22,7 @@ function ContactSection() {
             </a>
           </li>
         </ul>
-        <p>Currently open to roles in games, XR, and simulation. Also interested in hearing about anything at the intersection of real-time 3D and novel application domains.</p>
+        <p>Currently open to roles in games, XR, simulation, and AI/ML. Also interested in hearing about anything at the intersection of real-time 3D and novel application domains.</p>
       </div>
     </section>
   );
