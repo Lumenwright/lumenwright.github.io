@@ -92,3 +92,7 @@
     display: flex;
   }
 }
+
+.fabVisible {
+  display: flex !important;
+}

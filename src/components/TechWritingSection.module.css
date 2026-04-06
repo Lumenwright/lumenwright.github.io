@@ -1,0 +1,33 @@
+.section {
+  background-color: #e5e0d8;
+  color: #1a431f;
+}
+
+.techWritingList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.techWritingEntry {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.techWritingTitle {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1a431f;
+  text-decoration: none;
+}
+
+.techWritingTitle:hover {
+  text-decoration: underline;
+}
+
+.techWritingDescription {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}

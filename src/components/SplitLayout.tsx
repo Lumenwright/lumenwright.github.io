@@ -1,5 +1,5 @@
 import { ReactNode, CSSProperties } from 'react';
-import { useSplitScroll, SCROLL_DURATION_MS } from '../hooks/useSplitScroll';
+import { useSplitScroll } from '../hooks/useSplitScroll';
 import NavBar from './NavBar';
 import MobileDivider from './MobileDivider';
 import FloatingMenu from './FloatingMenu';
@@ -12,64 +12,54 @@ interface SplitLayoutProps {
   darkContent: ReactNode;
 }
 
-function panelStyle(isActive: boolean): CSSProperties {
-  return isActive
-    ? { minHeight: '100vh' }
-    : { height: '50vh', overflow: 'hidden' };
-}
-
 function scrollToId(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 }
 
 function SplitLayout({ lightHero, lightContent, darkHero, darkContent }: SplitLayoutProps) {
-  const { activeSection, setActiveSection, ready } = useSplitScroll();
+  const { introProgress, navScrolledAway, ready } = useSplitScroll();
 
-  function expandLightThen(id: string) {
-    if (activeSection === 'light') {
-      scrollToId(id);
-    } else {
-      setActiveSection('light');
-      setTimeout(() => scrollToId(id), SCROLL_DURATION_MS + 100);
-    }
-  }
+  // Dark overlay slides down and fades at tail end (80%-100%)
+  const overlayTranslateY = introProgress * 100;
+  const overlayOpacity = introProgress < 0.8 ? 1 : 1 - (introProgress - 0.8) / 0.2;
+
+  const overlayStyle: CSSProperties = {
+    transform: `translateY(${overlayTranslateY}%)`,
+    opacity: overlayOpacity,
+    pointerEvents: introProgress >= 1 ? 'none' : 'auto',
+  };
 
   return (
     <div style={{ visibility: ready ? 'visible' : 'hidden' }}>
-      <div
-        className={styles.lightPanel}
-        style={{
-          ...panelStyle(activeSection === 'light'),
-          cursor: activeSection !== 'light' ? 'pointer' : 'default',
-        }}
-        onClick={activeSection !== 'light' ? () => setActiveSection('light') : undefined}
-      >
+      <div className={styles.lightPanel}>
         {lightHero}
-        {activeSection === 'light' && lightContent}
+        {lightContent}
       </div>
-      <NavBar
-        onAboutClick={() => expandLightThen('about')}
-        onWorkClick={() => expandLightThen('projects')}
-        onMusicClick={() => setActiveSection('dark')}
-        onContactClick={() => expandLightThen('contact')}
-      />
+
+      <div className={styles.darkOverlay} style={overlayStyle}>
+        <NavBar
+          onAboutClick={() => scrollToId('about')}
+          onWorkClick={() => scrollToId('projects')}
+          onMusicClick={() => scrollToId('music')}
+          onContactClick={() => scrollToId('contact')}
+        />
+        <div className={styles.darkOverlayHero} onClick={() => scrollToId('music')} style={{ cursor: 'pointer', flex: 1 }}>
+          {darkHero}
+        </div>
+      </div>
+
       <MobileDivider />
       <FloatingMenu
-        onAboutClick={() => expandLightThen('about')}
-        onWorkClick={() => expandLightThen('projects')}
-        onMusicClick={() => setActiveSection('dark')}
-        onContactClick={() => expandLightThen('contact')}
+        navScrolledAway={navScrolledAway}
+        onAboutClick={() => scrollToId('about')}
+        onWorkClick={() => scrollToId('projects')}
+        onMusicClick={() => scrollToId('music')}
+        onContactClick={() => scrollToId('contact')}
       />
-      <div
-        className={styles.darkPanel}
-        style={{
-          ...panelStyle(activeSection === 'dark'),
-          cursor: activeSection !== 'dark' ? 'pointer' : 'default',
-        }}
-        onClick={activeSection !== 'dark' ? () => setActiveSection('dark') : undefined}
-      >
+
+      <div id="music" className={styles.darkPanel}>
         {darkHero}
-        {activeSection === 'dark' && darkContent}
+        {darkContent}
       </div>
     </div>
   );

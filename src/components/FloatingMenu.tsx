@@ -4,13 +4,14 @@ import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
 import styles from './FloatingMenu.module.css';
 
 export interface FloatingMenuProps {
+  navScrolledAway: boolean;
   onAboutClick: () => void;
   onWorkClick: () => void;
   onMusicClick: () => void;
   onContactClick: () => void;
 }
 
-function FloatingMenu({ onAboutClick, onWorkClick, onMusicClick, onContactClick }: FloatingMenuProps) {
+function FloatingMenu({ navScrolledAway, onAboutClick, onWorkClick, onMusicClick, onContactClick }: FloatingMenuProps) {
   const [open, setOpen] = useState(false);
 
   function handle(fn: () => void) {
@@ -35,7 +36,7 @@ function FloatingMenu({ onAboutClick, onWorkClick, onMusicClick, onContactClick 
         </div>
       )}
       <button
-        className={styles.fab}
+        className={`${styles.fab} ${navScrolledAway ? styles.fabVisible : ''}`}
         onClick={() => setOpen((o) => !o)}
         aria-label={open ? 'Close menu' : 'Open menu'}
       >

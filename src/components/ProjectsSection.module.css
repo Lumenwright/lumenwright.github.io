@@ -22,3 +22,71 @@
   color: #e5e0d8;
   border: none;
 }
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modalContent {
+  position: relative;
+  background: #e5e0d8;
+  color: #1a431f;
+  border-radius: 0.5rem;
+  max-width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.modalClose {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #1a431f;
+  z-index: 1001;
+}
+
+.modalImage {
+  width: 100%;
+  display: block;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.modalBody {
+  padding: 2rem;
+}
+
+.modalSubtitle {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.modalDescription {
+  margin: 1rem 0;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .modalContent {
+    max-width: 90vw;
+    max-height: 90vh;
+  }
+  .modalBody {
+    padding: 1.5rem;
+  }
+}
