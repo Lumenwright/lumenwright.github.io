@@ -1,25 +1,67 @@
-# Scroll-Reveal Implementation Plan
+# Portfolio Site Implementation Plan
 
-## Goal
+## Quick Overview
 
-On initial page load, the dark hero + NavBar form a fixed overlay covering the bottom 50vh of the viewport. As the user scrolls down, the overlay slides downward (with a subtle fade at the tail end), revealing the full light section beneath. After the overlay clears, normal scroll resumes through the light content. The dark panel lives at the bottom of the page in normal flow.
+Three interconnected changes:
+1. **Scroll-reveal**: Dark overlay animates away as user scrolls, revealing light panel
+2. **Project card refactor**: Show brief description + skills by default; full description in modal
+3. **Section extraction**: Pull Skills, Education, Tech Writing, Recommendations out of AboutSection; reorder flow
 
----
-
-## Behavior spec
-
-- **scrollY 0 → innerHeight/2**: Dark overlay translates from `translateY(0)` to `translateY(50vh)`. Opacity stays at 1 until ~80% progress, then fades to 0 by 100%.
-- **scrollY >= innerHeight/2**: Overlay is off-screen and invisible. Light content scrolls normally. Dark panel is accessible by continuing to scroll or via the "Music" nav link.
-- **FloatingMenu FAB**: Always visible on mobile (no change). On desktop, hidden while the overlay is visible, shown once `introProgress >= 1`.
-- **Clicking the overlay** (before it scrolls away): Should scroll to the dark panel at the bottom of the page.
+**Branch:** `UI-UX-feedback-rework`
 
 ---
 
-## Files to change
+## Master Changes Summary
 
-### 1. `src/hooks/useSplitScroll.ts` — full rewrite
+| File | Action | Priority |
+|------|--------|----------|
+| `src/hooks/useSplitScroll.ts` | Full rewrite | 1 |
+| `src/components/SplitLayout.tsx` | Full rewrite | 1 |
+| `src/components/SplitLayout.module.css` | Replace entirely | 1 |
+| `src/components/FloatingMenu.tsx` | Add `navScrolledAway` prop | 1 |
+| `src/components/FloatingMenu.module.css` | Add `.fabVisible` rule | 1 |
+| `src/components/NavBar.module.css` | Remove conflicting positioning | 1 |
+| `src/components/AboutSection.tsx` | Keep only bio prose | 2 |
+| `src/components/AboutSection.module.css` | Trim to bio-only styles | 2 |
+| `src/components/SkillsSection.tsx` | Create new wrapper | 2 |
+| `src/components/SkillsSection.module.css` | Create new | 2 |
+| `src/components/EducationSection.tsx` | Create new wrapper | 2 |
+| `src/components/EducationSection.module.css` | Create new | 2 |
+| `src/components/TechWritingSection.tsx` | Create new wrapper | 2 |
+| `src/components/TechWritingSection.module.css` | Create new | 2 |
+| `src/components/RecommendationsSection.tsx` | Refactor as standalone section | 2 |
+| `src/components/RecommendationsSection.module.css` | Create new | 2 |
+| `src/components/ProjectsSection.tsx` | Refactor ProjectCard with modal | 3 |
+| `src/components/ProjectsSection.module.css` | Add modal styles | 3 |
+| `src/types/project.ts` | Add `briefDescription` field | 3 |
+| `src/data/projects-light.json` | Add `briefDescription` to all 7 projects | 3 |
+| `src/App.tsx` | Update imports & reorder `lightContent` | All |
 
-Replace entirely with the following logic:
+---
+
+## Navigation IDs Reference
+
+These section IDs are used for nav links and scroll-to behavior:
+- `about` — AboutSection (bio prose)
+- `projects` — ProjectsSection (portfolio grid)
+- `skills` — SkillsSection
+- `education` — EducationSection
+- `technical-writing` — TechWritingSection
+- `recommendations` — RecommendationsSection
+- `contact` — ContactSection
+- `music` — Dark panel (bottom of page)
+
+NavBar/FloatingMenu nav links point to: `about`, `projects`, `contact`, `music`. No changes needed to those link handlers.
+
+---
+
+## Implementation Details by File
+
+### Priority 1: Scroll-Reveal Architecture
+
+#### `src/hooks/useSplitScroll.ts` — Full rewrite
+
+**Replace the entire file with:**
 
 ```ts
 import { useState, useEffect, useLayoutEffect } from 'react';
@@ -44,24 +86,17 @@ export function useSplitScroll() {
   }, []);
 
   const navScrolledAway = introProgress >= 1;
-
   return { introProgress, navScrolledAway, ready };
 }
 ```
 
-**What is removed:** `ActiveSection` type, `SCROLL_DURATION_MS`, `activeSection` state, `setActiveSection`, `darkScrollTarget`, `overflow: hidden` body lock, all `useEffect` blocks that managed programmatic scrolling.
+**Removed:** `ActiveSection` type, `SCROLL_DURATION_MS`, `activeSection` state, `setActiveSection`, `darkScrollTarget`, `overflow: hidden` body lock, all programmatic scroll effects.
 
 ---
 
-### 2. `src/components/SplitLayout.tsx` — full rewrite
+#### `src/components/SplitLayout.tsx` — Full rewrite
 
-Key structural changes:
-- Dark hero + NavBar move into a single `div.darkOverlay` with `position: fixed`
-- Light panel is always `min-height: 100vh` and always renders its content
-- Dark panel renders at the bottom of the page in normal flow with `id="music"` so the Music nav link can scroll to it
-- `introProgress` drives `translateY` and `opacity` on the overlay
-- `navScrolledAway` is passed to `FloatingMenu`
-- `expandLightThen` simplifies to just `scrollToId` (light content is always rendered)
+**Replace the entire file with:**
 
 ```tsx
 import { ReactNode, CSSProperties } from 'react';
@@ -85,8 +120,8 @@ function scrollToId(id: string) {
 function SplitLayout({ lightHero, lightContent, darkHero, darkContent }: SplitLayoutProps) {
   const { introProgress, navScrolledAway, ready } = useSplitScroll();
 
-  // Overlay slides down and fades out at the tail
-  const overlayTranslateY = introProgress * 100; // percent, relative to overlay's own height
+  // Dark overlay slides down and fades at tail end (80%-100%)
+  const overlayTranslateY = introProgress * 100;
   const overlayOpacity = introProgress < 0.8 ? 1 : 1 - (introProgress - 0.8) / 0.2;
 
   const overlayStyle: CSSProperties = {
@@ -97,13 +132,11 @@ function SplitLayout({ lightHero, lightContent, darkHero, darkContent }: SplitLa
 
   return (
     <div style={{ visibility: ready ? 'visible' : 'hidden' }}>
-      {/* Light panel — always full height, always rendered */}
       <div className={styles.lightPanel}>
         {lightHero}
         {lightContent}
       </div>
 
-      {/* Dark overlay — fixed, covers bottom 50vh, animates away on scroll */}
       <div className={styles.darkOverlay} style={overlayStyle}>
         <NavBar
           onAboutClick={() => scrollToId('about')}
@@ -111,16 +144,11 @@ function SplitLayout({ lightHero, lightContent, darkHero, darkContent }: SplitLa
           onMusicClick={() => scrollToId('music')}
           onContactClick={() => scrollToId('contact')}
         />
-        <div
-          className={styles.darkOverlayHero}
-          onClick={() => scrollToId('music')}
-          style={{ cursor: 'pointer', flex: 1 }}
-        >
+        <div className={styles.darkOverlayHero} onClick={() => scrollToId('music')} style={{ cursor: 'pointer', flex: 1 }}>
           {darkHero}
         </div>
       </div>
 
-      {/* Mobile divider and floating menu */}
       <MobileDivider />
       <FloatingMenu
         navScrolledAway={navScrolledAway}
@@ -130,7 +158,6 @@ function SplitLayout({ lightHero, lightContent, darkHero, darkContent }: SplitLa
         onContactClick={() => scrollToId('contact')}
       />
 
-      {/* Dark panel — normal flow, at bottom of page */}
       <div id="music" className={styles.darkPanel}>
         {darkHero}
         {darkContent}
@@ -142,13 +169,9 @@ function SplitLayout({ lightHero, lightContent, darkHero, darkContent }: SplitLa
 export default SplitLayout;
 ```
 
-**Note:** `expandLightThen` is removed entirely — it was only needed because light content was conditionally rendered. Now it's always rendered.
-
 ---
 
-### 3. `src/components/SplitLayout.module.css` — update
-
-Replace entirely:
+#### `src/components/SplitLayout.module.css` — Replace entirely
 
 ```css
 .lightPanel {
@@ -190,42 +213,15 @@ Replace entirely:
 
 ---
 
-### 4. `src/components/FloatingMenu.tsx` — add prop
+#### `src/components/FloatingMenu.tsx` — Add prop
 
-Add `navScrolledAway: boolean` to the props interface and pass it as a class toggle on the FAB:
-
-```tsx
-export interface FloatingMenuProps {
-  navScrolledAway: boolean;  // new
-  onAboutClick: () => void;
-  onWorkClick: () => void;
-  onMusicClick: () => void;
-  onContactClick: () => void;
-}
-
-function FloatingMenu({ navScrolledAway, onAboutClick, onWorkClick, onMusicClick, onContactClick }: FloatingMenuProps) {
-  // ...existing state...
-
-  return (
-    <>
-      {/* ...existing overlay/sheet JSX unchanged... */}
-      <button
-        className={`${styles.fab} ${navScrolledAway ? styles.fabVisible : ''}`}
-        onClick={() => setOpen((o) => !o)}
-        aria-label={open ? 'Close menu' : 'Open menu'}
-      >
-        <FontAwesomeIcon icon={open ? faXmark : faBars} />
-      </button>
-    </>
-  );
-}
-```
+**Change:**
+- Add `navScrolledAway: boolean` to `FloatingMenuProps`
+- Apply class toggle to FAB: `className={`${styles.fab} ${navScrolledAway ? styles.fabVisible : ''}`}`
 
 ---
 
-### 5. `src/components/FloatingMenu.module.css` — add modifier
-
-Add one rule after the existing `.fab` block:
+#### `src/components/FloatingMenu.module.css` — Add rule
 
 ```css
 .fabVisible {
@@ -233,86 +229,256 @@ Add one rule after the existing `.fab` block:
 }
 ```
 
-This overrides the `display: none` default on desktop when the navbar has scrolled away.
+Append after the existing `.fab` block. This overrides the media query `display: none` on desktop when navbar scrolls away.
 
 ---
 
-### 6. `src/components/NavBar.module.css` — remove conflicting positioning
+#### `src/components/NavBar.module.css` — Clean up
 
-The NavBar now lives inside the fixed overlay div (which handles its own stacking context). Remove `position: relative`, `z-index`, and `overflow: visible` from `.nav` if they conflict. The background, color, and responsive `display: none` are all fine to keep.
-
-Review the current file and remove only properties that would conflict with the parent overlay's stacking context. The `.profileCircleWrapper` absolute positioning is still valid (positioned relative to the navbar itself).
+**Remove:** `position: relative`, `z-index`, `overflow: visible` from `.nav` rule if they conflict with the fixed overlay parent. The `.profileCircleWrapper` absolute positioning is still valid (positioned relative to navbar).
 
 ---
 
-## What is NOT changing
+### Priority 2: Section Extraction & Reordering
 
-- `NavBar.tsx` JSX — no changes needed
-- `MobileDivider.tsx` — no changes
-- All `src/data/` files — no changes
-- `App.tsx` — no changes (props passed to SplitLayout stay the same, except note that `darkContent` should be something meaningful or a placeholder; the dark panel is now always rendered)
-- The `id` attributes on existing sections (`about`, `projects`, `contact`) — verify these exist in the light content components
+#### `src/components/AboutSection.tsx` — Bio prose only
 
----
+**Replace with:**
 
-## Things to verify after implementing
-
-1. `id="about"`, `id="projects"`, `id="contact"` exist in the rendered light content (check `AboutSection.tsx` and `ProjectsSection.tsx`)
-2. The dark panel (`id="music"`) renders correctly at the bottom with both `darkHero` and `darkContent` — currently `darkContent` in `App.tsx` may be empty/null; that's fine, it just renders the hero
-3. On mobile: the dark overlay is still 50vh and covers the bottom half — test that the FAB (always visible on mobile) still works correctly while the overlay is present
-4. Scroll the page fully down to `#music` and confirm the dark panel looks correct at full `min-height: 100vh`
-5. Confirm `pointerEvents: none` on the overlay once `introProgress >= 1` so the user can't accidentally click through to the dark panel trigger
-
----
-
-## Branch
-
-Work on branch `UI-UX-feedback-rework` (already active).
-
----
-
----
-
-# ADDENDUM: Project Card Refactor + Reordering
-
-## Goal
-
-1. **Reorder sections**: Move Projects to appear immediately after About (light panel flow: Hero → About → Projects → Contact → Footer)
-2. **Refactor ProjectCard**: Show brief Netflix-style description + skill tags by default. Full description displays in a modal overlay when clicked.
-3. **Add brief descriptions**: Each project gets a concise 1-2 sentence `briefDescription` field that captures the project's essence and core achievement.
-
----
-
-## Part 1: Reorder sections in light content
-
-**File: `src/App.tsx`**
-
-Change the `lightContent` JSX to:
 ```tsx
-lightContent={
-  <>
-    <HeroSection title="ROSE CHUNG" subtitle="Senior Unity/C# Developer · 8 years in real-time 3D" />
-    <AboutSection />
-    <ProjectsSection projects={lightProjects} />
-    <ContactSection />
-    <Footer />
-  </>
+import { parseInlineBold } from '../utils/parseInlineBold';
+import { aboutProse } from '../data/about';
+import styles from './AboutSection.module.css';
+
+function AboutSection() {
+  return (
+    <section id="about" className="py-5">
+      <div className="container">
+        <h2>Who am I?</h2>
+        <ul className={styles.list}>
+          {aboutProse.map((b) => (
+            <p key={b}>{parseInlineBold(b)}</p>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+export default AboutSection;
+```
+
+**Remove imports:** `SkillsGrid`, `EducationBlock`, `RecommendationsSection`, `technicalWriting` data.
+
+---
+
+#### `src/components/AboutSection.module.css` — Trim
+
+**Replace with:**
+
+```css
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.list p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
 }
 ```
 
-Note: Move the `HeroSection` import inside `App()` if it isn't already, or just keep it inline as shown. Actually, looking at the current App.tsx, `HeroSection` is passed to `SplitLayout` separately. So this change just reorders the lightContent JSX, which is already correct in the current file — **no changes needed to App.tsx**, the order is already right. ✓
+---
+
+#### `src/components/SkillsSection.tsx` — New wrapper
+
+```tsx
+import SkillsGrid from './SkillsGrid';
+import styles from './SkillsSection.module.css';
+
+function SkillsSection() {
+  return (
+    <section id="skills" className={`py-5 ${styles.section}`}>
+      <div className="container">
+        <h2>Skills</h2>
+        <SkillsGrid />
+      </div>
+    </section>
+  );
+}
+
+export default SkillsSection;
+```
 
 ---
 
-## Part 2: Update Project type to support brief description + full description
+#### `src/components/SkillsSection.module.css` — New
 
-**File: `src/types/project.ts`**
+```css
+.section {
+  background-color: #e5e0d8;
+  color: #1a431f;
+}
+```
 
-Replace with:
+---
+
+#### `src/components/EducationSection.tsx` — New wrapper
+
+```tsx
+import EducationBlock from './EducationBlock';
+import styles from './EducationSection.module.css';
+
+function EducationSection() {
+  return (
+    <section id="education" className={`py-5 ${styles.section}`}>
+      <div className="container">
+        <h2>Education</h2>
+        <EducationBlock />
+      </div>
+    </section>
+  );
+}
+
+export default EducationSection;
+```
+
+---
+
+#### `src/components/EducationSection.module.css` — New
+
+```css
+.section {
+  background-color: #e5e0d8;
+  color: #1a431f;
+}
+```
+
+---
+
+#### `src/components/TechWritingSection.tsx` — New
+
+```tsx
+import technicalWriting from '../data/technical-writing';
+import styles from './TechWritingSection.module.css';
+
+function TechWritingSection() {
+  return (
+    <section id="technical-writing" className={`py-5 ${styles.section}`}>
+      <div className="container">
+        <h2>Technical Writing</h2>
+        <div className={styles.techWritingList}>
+          {technicalWriting.map((entry) => (
+            <div key={entry.title} className={styles.techWritingEntry}>
+              {entry.url
+                ? <a href={entry.url} className={styles.techWritingTitle}>{entry.title}</a>
+                : <span className={styles.techWritingTitle}>{entry.title}</span>
+              }
+              <p className={styles.techWritingDescription}>{entry.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default TechWritingSection;
+```
+
+---
+
+#### `src/components/TechWritingSection.module.css` — New
+
+```css
+.section {
+  background-color: #e5e0d8;
+  color: #1a431f;
+}
+
+.techWritingList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.techWritingEntry {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.techWritingTitle {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1a431f;
+  text-decoration: none;
+}
+
+.techWritingTitle:hover {
+  text-decoration: underline;
+}
+
+.techWritingDescription {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+```
+
+---
+
+#### `src/components/RecommendationsSection.tsx` — Refactor existing
+
+**Replace with:**
+
+```tsx
+import Carousel from './Carousel';
+import RecommendationCard from './RecommendationCard';
+import recommendations from '../data/recommendations.json';
+import styles from './RecommendationsSection.module.css';
+
+function RecommendationsSection() {
+  return (
+    <section id="recommendations" className={`py-5 ${styles.section}`}>
+      <div className="container">
+        <h2>Recommendations</h2>
+        <Carousel>
+          {recommendations.map((rec) => (
+            <RecommendationCard key={rec.name} recommendation={rec} />
+          ))}
+        </Carousel>
+      </div>
+    </section>
+  );
+}
+
+export default RecommendationsSection;
+```
+
+---
+
+#### `src/components/RecommendationsSection.module.css` — New
+
+```css
+.section {
+  background-color: #e5e0d8;
+  color: #1a431f;
+}
+```
+
+---
+
+### Priority 3: Project Card Refactor
+
+#### `src/types/project.ts` — Add field
+
+**Change:** Add `briefDescription: string` field before `description`.
+
 ```ts
 export interface Project {
   title: string;
-  briefDescription: string;          // new: 1-2 sentences for card view
+  briefDescription: string;          // new: 1-2 sentences for card
   description: string;               // full description for modal
   thumbnail: string;
   company?: string;
@@ -324,88 +490,29 @@ export interface Project {
 
 ---
 
-## Part 3: Update projects data with brief descriptions
+#### `src/data/projects-light.json` — Add brief descriptions
 
-**File: `src/data/projects-light.json`**
+Add `briefDescription` field to all 7 projects. Use these summaries:
 
-Add `briefDescription` to each project. See the list below — copy the brief descriptions into the appropriate projects:
+1. **VR Training Platform SDK**: "Owned reusable components and core infrastructure for thousands of VR training simulations. Delivered 80% reduction in app-launch time and a visual scripting tool for designers."
 
-```json
-[
-  {
-    "title": "VR Training Platform SDK",
-    "briefDescription": "Owned reusable components and core infrastructure for thousands of VR training simulations. Delivered 80% reduction in app-launch time and a visual scripting tool for designers.",
-    "company": "Transfr Inc.",
-    "years": "2023–2026",
-    "skills": ["Unity", "C#", "Oculus Quest", "Pico", "WebGL", "REST API", "Azure DevOps"],
-    "description": "[... keep the full description as-is ...]",
-    "thumbnail": "/thumbnails/TransfrCoastalBend-hero.webp"
-  },
-  {
-    "title": "Asset Bundle Management System",
-    "briefDescription": "Built an end-to-end content delivery system from scratch that discovered and enabled a 90% reduction in patch sizes through intelligent asset grouping.",
-    "company": "Transfr Inc.",
-    "years": "2023–2026",
-    "skills": ["Unity", "C#", "Unity Addressables", "Asynchronous programming", "Oculus Quest", "Pico"],
-    "description": "[... keep the full description as-is ...]",
-    "thumbnail": "/thumbnails/TransfrCoastalBend-hero.webp"
-  },
-  {
-    "title": "Synthetic Training Data for Computer Vision",
-    "briefDescription": "Generated 20,000–50,000 labeled synthetic images per scene for ML model training, including real-time robotics sensor simulation with compute shader visualization.",
-    "company": "Unity Technologies",
-    "years": "2022–2023",
-    "skills": ["Unity Perception", "C#", "HLSL", "Computer Vision", "Machine Learning", "WebSocket"],
-    "description": "[... keep the full description as-is ...]",
-    "thumbnail": "/thumbnails/Unity_2021.svg"
-  },
-  {
-    "title": "YVR Vancouver International Airport Digital Twin",
-    "briefDescription": "Built real-time UI systems and optimized performance for an international airport digital twin, collaborating with domain experts across the project lifecycle.",
-    "company": "Unity Technologies",
-    "years": "2020–2023",
-    "skills": ["Unity", "C#", "AR", "VR", "UI Systems", "Rendering", "Performance Optimization"],
-    "description": "[... keep the full description as-is ...]",
-    "thumbnail": "/thumbnails/Unity_2021.svg",
-    "externalLink": "https://youtu.be/1rWNu1zqC5k?t=112"
-  },
-  {
-    "title": "Thunder",
-    "briefDescription": "A Blackfoot language learning VR experience for Oculus Go that premiered at Vancouver and Nashville International Film Festivals in 2019.",
-    "company": "Mammoth XR",
-    "years": "2019",
-    "skills": ["Unity", "C#", "Oculus Go", "Oculus SDK", "Ableton"],
-    "description": "[... keep the full description as-is ...]",
-    "thumbnail": "/thumbnails/Thunder-Postcard.jpg"
-  },
-  {
-    "title": "AR Assistant for Retail (HoloLens)",
-    "briefDescription": "Designed spatial UI on HoloLens with custom editor tools for designers, solving resource-constrained 3D interaction challenges with linear algebra and calculus.",
-    "company": "Finger Food / Unity",
-    "years": "2019–2021",
-    "skills": ["Unity", "C#", "AR", "HoloLens", "MRTK", "Jenkins"],
-    "description": "[... keep the full description as-is ...]",
-    "thumbnail": "/thumbnails/fingerfood-atg-logo.png"
-  },
-  {
-    "title": "PASS VR Fire Extinguisher Training",
-    "briefDescription": "Optimized a desktop fire extinguisher training experience for mobile VR on Oculus Go using particle system and pooling techniques for performance-constrained hardware.",
-    "company": "Mammoth XR",
-    "years": "2018",
-    "skills": ["Unreal Engine 4", "VR", "Oculus Go", "Mobile Optimization"],
-    "description": "[... keep the full description as-is ...]",
-    "thumbnail": "/thumbnails/PASS-VR.png"
-  }
-]
-```
+2. **Asset Bundle Management System**: "Built an end-to-end content delivery system from scratch that discovered and enabled a 90% reduction in patch sizes through intelligent asset grouping."
+
+3. **Synthetic Training Data for Computer Vision**: "Generated 20,000–50,000 labeled synthetic images per scene for ML model training, including real-time robotics sensor simulation with compute shader visualization."
+
+4. **YVR Vancouver International Airport Digital Twin**: "Built real-time UI systems and optimized performance for an international airport digital twin, collaborating with domain experts across the project lifecycle."
+
+5. **Thunder**: "A Blackfoot language learning VR experience for Oculus Go that premiered at Vancouver and Nashville International Film Festivals in 2019."
+
+6. **AR Assistant for Retail (HoloLens)**: "Designed spatial UI on HoloLens with custom editor tools for designers, solving resource-constrained 3D interaction challenges with linear algebra and calculus."
+
+7. **PASS VR Fire Extinguisher Training**: "Optimized a desktop fire extinguisher training experience for mobile VR on Oculus Go using particle system and pooling techniques for performance-constrained hardware."
 
 ---
 
-## Part 4: Refactor ProjectCard component
+#### `src/components/ProjectsSection.tsx` — Refactor ProjectCard
 
-**File: `src/components/ProjectsSection.tsx`**
-
-Replace the `ProjectCard` component with:
+**Replace the ProjectCard component entirely with:**
 
 ```tsx
 import { useState } from 'react';
@@ -431,17 +538,11 @@ function ProjectCard({ project }: ProjectCardProps) {
               </p>
             )}
             <h5 className="card-title">{project.title}</h5>
-            {/* Brief description — always shown */}
             <p className="card-text small flex-grow-1">{project.briefDescription}</p>
-            {/* Skills tags */}
             {project.skills && project.skills.length > 0 && (
               <div className="d-flex flex-wrap gap-1 mt-2">
                 {project.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="badge rounded-pill"
-                    style={{ fontSize: '0.7rem', background: '#bf9b30', color: '#081c09' }}
-                  >
+                  <span key={skill} className="badge rounded-pill" style={{ fontSize: '0.7rem', background: '#bf9b30', color: '#081c09' }}>
                     {skill}
                   </span>
                 ))}
@@ -451,40 +552,26 @@ function ProjectCard({ project }: ProjectCardProps) {
         </div>
       </div>
 
-      {/* Modal overlay for full description */}
       {showModal && (
         <div className={styles.modal} onClick={() => setShowModal(false)}>
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <button className={styles.modalClose} onClick={() => setShowModal(false)}>
-              ✕
-            </button>
+            <button className={styles.modalClose} onClick={() => setShowModal(false)}>✕</button>
             <img src={project.thumbnail} alt={project.title} className={styles.modalImage} />
             <div className={styles.modalBody}>
               {(project.company || project.years) && (
-                <p className={styles.modalSubtitle}>
-                  {[project.company, project.years].filter(Boolean).join(' · ')}
-                </p>
+                <p className={styles.modalSubtitle}>{[project.company, project.years].filter(Boolean).join(' · ')}</p>
               )}
               <h3>{project.title}</h3>
               <p className={styles.modalDescription}>{project.description}</p>
               {project.externalLink && (
-                <a
-                  href={project.externalLink}
-                  className="btn btn-primary"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href={project.externalLink} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
                   View external link
                 </a>
               )}
               {project.skills && project.skills.length > 0 && (
                 <div className="d-flex flex-wrap gap-1 mt-3">
                   {project.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="badge rounded-pill"
-                      style={{ fontSize: '0.75rem', background: '#bf9b30', color: '#081c09' }}
-                    >
+                    <span key={skill} className="badge rounded-pill" style={{ fontSize: '0.75rem', background: '#bf9b30', color: '#081c09' }}>
                       {skill}
                     </span>
                   ))}
@@ -497,17 +584,35 @@ function ProjectCard({ project }: ProjectCardProps) {
     </>
   );
 }
-```
 
-No changes needed to `ProjectsSection` component itself.
+// ProjectsSection component unchanged
+interface ProjectsSectionProps {
+  projects: Project[];
+}
+
+function ProjectsSection({ projects }: ProjectsSectionProps) {
+  return (
+    <section id="projects" className={`py-5 ${styles.section}`}>
+      <div className="container">
+        <h2>Work</h2>
+        <div className="row">
+          {projects.map((project) => (
+            <ProjectCard key={project.title} project={project} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default ProjectsSection;
+```
 
 ---
 
-## Part 5: Add CSS for modal overlay
+#### `src/components/ProjectsSection.module.css` — Add modal styles
 
-**File: `src/components/ProjectsSection.module.css`**
-
-Add the following CSS at the end:
+**Append to the end:**
 
 ```css
 .modal {
@@ -573,7 +678,6 @@ Add the following CSS at the end:
     max-width: 90vw;
     max-height: 90vh;
   }
-
   .modalBody {
     padding: 1.5rem;
   }
@@ -582,312 +686,9 @@ Add the following CSS at the end:
 
 ---
 
-## What is removed / changed
+### App.tsx — Update imports & reorder
 
-- ProjectCard no longer displays full `description` by default — only the brief description
-- Full description is now modal-only, triggered by clicking the card
-- No changes to `ProjectsSection` logic
-- `externalLink` button moves into the modal (was in the card, now only in modal)
-
----
-
-## What stays the same
-
-- Project data structure for company, years, skills, thumbnail, externalLink
-- `ProjectsSection` component (wraps ProjectCard)
-- Section ID `id="projects"` (used for navigation)
-- Grid layout and styling (card is still `col-md-4`)
-
----
-
-## Implementation notes
-
-- The modal is simple and inline — no separate modal component created (follows "don't over-abstract" guideline)
-- Modal content fits up to 600px wide on desktop, responsive on mobile
-- Close button is an × symbol (U+2717), clickable and keyboard-accessible would require adding an `onKeyDown` handler if desired (optional)
-- Clicking outside the modal closes it (overlay click handler)
-- The brief description uses the `.small` Bootstrap class for slightly smaller font
-
----
-
-## Testing checklist after implementation
-
-1. ✓ Click a project card — modal opens with full description
-2. ✓ Click outside the modal — it closes
-3. ✓ Click the × button — modal closes
-4. ✓ Skills badges display in both card view and modal view
-5. ✓ External links work in modal (if project has one)
-6. ✓ Card text is truncated properly with flex layout (`flex-grow-1` on brief desc pushes skills to bottom)
-7. ✓ Modal scrolls if content is taller than 85vh
-8. ✓ Mobile responsive: modal uses 90vw and 90vh max sizes
-
----
-
----
-
-# ADDENDUM 2: Extract sections from AboutSection + Reorder
-
-## Goal
-
-1. Extract Skills, Education, Technical Writing, and Recommendations out of `AboutSection`
-2. Make each an independent component at the same level as AboutSection
-3. Reorder light content so the new flow is: About → Projects → Skills → Education → Technical Writing → Recommendations → Contact → Footer
-
----
-
-## Overview: What already exists vs what needs creating
-
-The following components already exist and just need to be promoted to top-level sections:
-- `SkillsGrid.tsx` — renders the skills tags grid (already in AboutSection)
-- `EducationBlock.tsx` — renders education entries (already in AboutSection)
-- `RecommendationsSection.tsx` — renders the carousel with heading and LinkedIn link (already exists, just not in AboutSection)
-
-What needs to be created:
-- `SkillsSection.tsx` — wrapper around SkillsGrid with section styling
-- `EducationSection.tsx` — wrapper around EducationBlock with section styling
-- `TechWritingSection.tsx` — new component (Technical Writing wasn't extracted yet)
-
----
-
-## Part 1: Refactor AboutSection to contain only bio prose
-
-**File: `src/components/AboutSection.tsx`**
-
-Replace entirely with:
-
-```tsx
-import { parseInlineBold } from '../utils/parseInlineBold';
-import { aboutProse } from '../data/about';
-import styles from './AboutSection.module.css';
-
-function AboutSection() {
-  return (
-    <section id="about" className="py-5">
-      <div className="container">
-        <h2>Who am I?</h2>
-        <ul className={styles.list}>
-          {aboutProse.map((b) => (
-            <p key={b}>{parseInlineBold(b)}</p>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-export default AboutSection;
-```
-
-Remove imports for: `SkillsGrid`, `EducationBlock`, `RecommendationsSection`, `technicalWriting`, `styles.techWritingList`, `styles.techWritingEntry`, `styles.techWritingTitle`, `styles.techWritingDescription`
-
----
-
-## Part 2: Create SkillsSection component
-
-**File: `src/components/SkillsSection.tsx`** (new file)
-
-```tsx
-import SkillsGrid from './SkillsGrid';
-import styles from './SkillsSection.module.css';
-
-function SkillsSection() {
-  return (
-    <section id="skills" className={`py-5 ${styles.section}`}>
-      <div className="container">
-        <h2>Skills</h2>
-        <SkillsGrid />
-      </div>
-    </section>
-  );
-}
-
-export default SkillsSection;
-```
-
-**File: `src/components/SkillsSection.module.css`** (new file)
-
-```css
-.section {
-  background-color: #e5e0d8;
-  color: #1a431f;
-}
-```
-
----
-
-## Part 3: Create EducationSection component
-
-**File: `src/components/EducationSection.tsx`** (new file)
-
-```tsx
-import EducationBlock from './EducationBlock';
-import styles from './EducationSection.module.css';
-
-function EducationSection() {
-  return (
-    <section id="education" className={`py-5 ${styles.section}`}>
-      <div className="container">
-        <h2>Education</h2>
-        <EducationBlock />
-      </div>
-    </section>
-  );
-}
-
-export default EducationSection;
-```
-
-**File: `src/components/EducationSection.module.css`** (new file)
-
-```css
-.section {
-  background-color: #e5e0d8;
-  color: #1a431f;
-}
-```
-
----
-
-## Part 4: Create TechWritingSection component
-
-**File: `src/components/TechWritingSection.tsx`** (new file)
-
-```tsx
-import technicalWriting from '../data/technical-writing';
-import styles from './TechWritingSection.module.css';
-
-function TechWritingSection() {
-  return (
-    <section id="technical-writing" className={`py-5 ${styles.section}`}>
-      <div className="container">
-        <h2>Technical Writing</h2>
-        <div className={styles.techWritingList}>
-          {technicalWriting.map((entry) => (
-            <div key={entry.title} className={styles.techWritingEntry}>
-              {entry.url
-                ? <a href={entry.url} className={styles.techWritingTitle}>{entry.title}</a>
-                : <span className={styles.techWritingTitle}>{entry.title}</span>
-              }
-              <p className={styles.techWritingDescription}>{entry.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export default TechWritingSection;
-```
-
-**File: `src/components/TechWritingSection.module.css`** (new file)
-
-Copy the relevant styles from the old `AboutSection.module.css`:
-
-```css
-.section {
-  background-color: #e5e0d8;
-  color: #1a431f;
-}
-
-.techWritingList {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.techWritingEntry {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.techWritingTitle {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #1a431f;
-  text-decoration: none;
-}
-
-.techWritingTitle:hover {
-  text-decoration: underline;
-}
-
-.techWritingDescription {
-  margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-```
-
----
-
-## Part 5: Create RecommendationsSection component
-
-**File: `src/components/RecommendationsSection.tsx`** (new file)
-
-Replace the existing `RecommendationsSection.tsx` with a wrapper that just renders the carousel:
-
-```tsx
-import Carousel from './Carousel';
-import RecommendationCard from './RecommendationCard';
-import recommendations from '../data/recommendations.json';
-import styles from './RecommendationsSection.module.css';
-
-function RecommendationsSection() {
-  return (
-    <section id="recommendations" className={`py-5 ${styles.section}`}>
-      <div className="container">
-        <h2>Recommendations</h2>
-        <Carousel>
-          {recommendations.map((rec) => (
-            <RecommendationCard key={rec.name} recommendation={rec} />
-          ))}
-        </Carousel>
-      </div>
-    </section>
-  );
-}
-
-export default RecommendationsSection;
-```
-
-**File: `src/components/RecommendationsSection.module.css`** (new file)
-
-```css
-.section {
-  background-color: #e5e0d8;
-  color: #1a431f;
-}
-```
-
----
-
-## Part 6: Update AboutSection.module.css
-
-**File: `src/components/AboutSection.module.css`**
-
-Remove any tech writing related styles. Keep only:
-
-```css
-.list {
-  list-style: none;
-  padding: 0;
-}
-
-.list p {
-  margin-bottom: 1rem;
-  line-height: 1.6;
-}
-```
-
----
-
-## Part 7: Update App.tsx with new component imports and reordered lightContent
-
-**File: `src/App.tsx`**
-
-Update imports and lightContent:
+**Update to:**
 
 ```tsx
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -921,11 +722,7 @@ function App() {
         </>
       }
       darkHero={<HeroSection title="LUMENWRIGHT" subtitle="Music producer and Twitch DJ · 'The Oath' out now on FSOE" />}
-      darkContent={
-        <>
-          <Footer />
-        </>
-      }
+      darkContent={<Footer />}
     />
   );
 }
@@ -935,61 +732,43 @@ export default App;
 
 ---
 
-## Section IDs for navigation
+## Testing & Verification
 
-The new section IDs are:
-- `about` — AboutSection (bio prose only)
-- `projects` — ProjectsSection (portfolio)
-- `skills` — SkillsSection
-- `education` — EducationSection
-- `technical-writing` — TechWritingSection
-- `recommendations` — RecommendationsSection
-- `contact` — ContactSection
+### Scroll-Reveal (Priority 1)
+- [ ] Page loads with dark overlay visible at bottom 50vh
+- [ ] Scrolling down causes overlay to slide down (not follow scroll normally)
+- [ ] Overlay fades out during final 20% of intro phase
+- [ ] After scrollY ≥ innerHeight/2, dark overlay is fully off-screen
+- [ ] On mobile: FAB remains visible throughout intro phase
+- [ ] On desktop: FAB appears once overlay is gone (`navScrolledAway === true`)
+- [ ] Clicking overlay during intro scrolls to `#music` (dark panel at bottom)
 
-Update nav links in `NavBar.tsx` and `FloatingMenu.tsx` if needed to point to the correct section IDs. Currently they point to `about`, `projects`, and `contact`, which still exist and are in the right place.
+### Section Extraction (Priority 2)
+- [ ] About section shows only bio prose (no subsections)
+- [ ] Projects appear immediately after About
+- [ ] Skills, Education, Technical Writing, Recommendations each render as independent sections
+- [ ] Each section has proper spacing (`py-5`) and styling
+- [ ] Skills Grid displays correctly
+- [ ] Education Block displays correctly
+- [ ] Technical Writing links work (both linked and non-linked entries)
+- [ ] Recommendations carousel functions (scrolling, nav buttons)
+- [ ] All section IDs exist and nav links work: `about`, `projects`, `skills`, `education`, `technical-writing`, `recommendations`, `contact`
 
----
-
-## What is removed
-
-- Skills, Education, Technical Writing subsections from `AboutSection.tsx`
-- Related styles from `AboutSection.module.css`
-- Duplicated imports in `AboutSection` (SkillsGrid, EducationBlock, technicalWriting data, RecommendationsSection)
-
----
-
-## What stays the same
-
-- All data files remain unchanged (`skills.ts`, `education.ts`, `technical-writing.ts`, `recommendations.json`)
-- Component logic remains the same (SkillsGrid, EducationBlock, Carousel, RecommendationCard unchanged)
-- Section styling — each new section has its own `.module.css` for encapsulation
-- Nav behavior — existing nav links still work (About, Work, Contact are still accessible)
-
----
-
-## Files created (new)
-
-1. `src/components/SkillsSection.tsx` + `.module.css`
-2. `src/components/EducationSection.tsx` + `.module.css`
-3. `src/components/TechWritingSection.tsx` + `.module.css`
-4. `src/components/RecommendationsSection.tsx` (replaces existing if it only wraps the carousel) + `.module.css`
+### Project Card Refactor (Priority 3)
+- [ ] Project cards show brief description (not full description)
+- [ ] Skill badges display on cards
+- [ ] Clicking a card opens modal
+- [ ] Modal shows full description, company, years, skills, external link
+- [ ] Clicking outside modal closes it
+- [ ] Clicking × button closes modal
+- [ ] Modal scrolls if content > 85vh (test with longer descriptions)
+- [ ] Mobile: modal uses 90vw/90vh max sizes
+- [ ] All 7 projects have `briefDescription` field in JSON
 
 ---
 
-## Files modified
+## Notes
 
-1. `src/components/AboutSection.tsx` — remove everything except bio prose
-2. `src/components/AboutSection.module.css` — trim to only bio styles
-3. `src/App.tsx` — new imports, reordered lightContent
-
----
-
-## Testing checklist
-
-1. ✓ About section displays only bio prose (no subsections)
-2. ✓ Projects section appears immediately after About
-3. ✓ Skills, Education, Technical Writing, Recommendations each appear in their own sections below Projects
-4. ✓ Each section has proper spacing/styling
-5. ✓ Navigation links still work (About, Work, Contact)
-6. ✓ Carousel in Recommendations section functions correctly
-7. ✓ Mobile responsive — sections stack properly
+- Data files (`skills.ts`, `education.ts`, `technical-writing.ts`, `recommendations.json`) remain unchanged
+- Existing child components (SkillsGrid, EducationBlock, Carousel, RecommendationCard) are untouched
+- No changes to `NavBar.tsx`, `MobileDivider.tsx`, or `ContactSection.tsx`
