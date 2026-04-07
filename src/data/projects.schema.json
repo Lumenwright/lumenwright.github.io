@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProjectsData",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["title", "description", "thumbnail"],
+    "properties": {
+      "title": {
+        "type": "string",
+        "description": "Display name of the project"
+      },
+      "company": {
+        "type": "string",
+        "description": "Company name associated with the project"
+      },
+      "years": {
+        "type": "string",
+        "description": "Years during which the project was active"
+      },
+      "skills": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "List of skills or technologies used in the project"
+      },
+      "description": {
+        "type": "string",
+        "description": "Short description of the project"
+      },
+      "thumbnail": {
+        "type": "string",
+        "description": "Path or URL to the project thumbnail image"
+      },
+      "externalLink": {
+        "type": "string",
+        "description": "Optional URL to an external resource related to the project"
+      }
+
+    },
+    "additionalProperties": false
+  }
+}

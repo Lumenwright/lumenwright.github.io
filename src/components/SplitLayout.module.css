@@ -1,0 +1,35 @@
+.lightPanel {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #e5e0d8;
+  color: #1a431f;
+}
+
+.darkOverlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #1a431f;
+  color: #e5e0d8;
+  will-change: transform, opacity;
+  z-index: 10;
+}
+
+.darkOverlayHero {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.darkPanel {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #1a431f;
+  color: #e5e0d8;
+}

@@ -1,0 +1,66 @@
+[
+  {
+    "title": "VR Training Platform SDK",
+    "company": "Transfr Inc.",
+    "years": "2023–2026",
+    "skills": ["Unity", "C#", "Oculus Quest", "Pico", "WebGL", "REST API", "Azure DevOps"],
+    "briefDescription": "Owned reusable components and core infrastructure for thousands of VR training simulations. Delivered 80% reduction in app-launch time and a visual scripting tool for designers.",
+    "description": "The SDK that thousands of students' VR training simulations ran on. I owned reusable components and key infrastructure across the full platform, working with XR designers, product managers, and backend engineers through a structured technical design process. Highlights include the Skip Menu / Fast Path feature, which cut app-launch-to-sim time by 80% and significantly accelerated QA cycles; a new height adjustment system so much simpler than its predecessor that the XR designers gave it a virtual standing ovation; and a graph-based visual scripting tool that let designers and engineers build simulation logic without writing code.",
+    "thumbnail": "/thumbnails/TransfrCoastalBend-hero.webp"
+  },
+  {
+    "title": "Asset Bundle Management System",
+    "company": "Transfr Inc.",
+    "years": "2023–2026",
+    "skills": ["Unity", "C#", "Unity Addressables", "Asynchronous programming", "Oculus Quest", "Pico"],
+    "briefDescription": "Built an end-to-end content delivery system from scratch that discovered and enabled a 90% reduction in patch sizes through intelligent asset grouping.",
+    "description": "The infrastructure responsible for getting simulation content onto VR devices reliably and efficiently. I built this system from the ground up and owned it end-to-end, serving as the architectural decision-maker for how engineers across teams used and extended it. After the team adopted my prototype framework in production, I discovered that the way we were structuring Addressables groups was causing content patch sizes to be far larger than necessary: because Addressables groups bundle assets into a single downloaded file, poorly scoped groups meant unchanged assets were being re-downloaded alongside changed ones. My original decision to use a single content catalog per simulation made it straightforward to rescope those groups, since the catalog gave us a clean per-simulation view of what was in each bundle. Rescoping the groups demonstrated a path to 90% reduction in content patch sizes for customers. Later improvements included async loading architecture, bitmask-based status reporting, and download UI that surfaced wifi loss and loading state to users who previously had no visibility into what was happening.",
+    "thumbnail": "/thumbnails/TransfrCoastalBend-hero.webp"
+  },
+  {
+    "title": "Synthetic Training Data for Computer Vision",
+    "company": "Unity Technologies",
+    "years": "2022–2023",
+    "skills": ["Unity Perception", "C#", "HLSL", "Computer Vision", "Machine Learning", "WebSocket"],
+    "briefDescription": "Generated 20,000–50,000 labeled synthetic images per scene for ML model training, including real-time robotics sensor simulation with compute shader visualization.",
+    "description": "Generated synthetic training datasets of 20,000–50,000 labeled images per scene for computer vision models spanning object detection, pose estimation, and segmentation. The datasets were used directly by ML research teams to train and validate models; without high-quality synthetic data at this scale, the research couldn't proceed. One project involved real-time simulation of robotics sensor data, with results analyzed and visualized using compute shaders written in HLSL, as part of a sim-to-real obstacle avoidance training pipeline for a physical robot.",
+    "thumbnail": "/thumbnails/Unity_2021.svg"
+  },
+  {
+    "title": "YVR Vancouver International Airport Digital Twin",
+    "company": "Unity Technologies",
+    "years": "2020–2023",
+    "skills": ["Unity", "C#", "AR", "VR", "UI Systems", "Rendering", "Performance Optimization"],
+    "briefDescription": "Built real-time UI systems and optimized performance for an international airport digital twin, collaborating with domain experts across the project lifecycle.",
+    "description": "A real-time digital twin of Vancouver International Airport, one of several shipped to Fortune 500 clients. My contributions included implementing Figma designer wireframes for a timeline and notification UI, performance optimization to run resource-heavy services concurrently in real time, and collaboration with domain experts and non-technical stakeholders across the project lifecycle. The project is publicly visible on YouTube.",
+    "thumbnail": "/thumbnails/Unity_2021.svg",
+    "externalLink": "https://youtu.be/1rWNu1zqC5k?t=112"
+  },
+  {
+    "title": "Thunder",
+    "company": "Mammoth XR",
+    "years": "2019",
+    "skills": ["Unity", "C#", "Oculus Go", "Oculus SDK", "Ableton"],
+    "briefDescription": "A Blackfoot language learning VR experience for Oculus Go that premiered at Vancouver and Nashville International Film Festivals in 2019.",
+    "description": "A Blackfoot language learning VR experience built for Oculus Go, invited to the Vancouver and Nashville International Film Festivals in 2019. Built as part of a team of eight, with contributions including programming, sound design in Ableton, and serving as the team's go-to for 3D math problems. One of the more unusual briefs I've worked on, and one of the more meaningful.",
+    "thumbnail": "/thumbnails/Thunder-Postcard.jpg"
+  },
+  {
+    "title": "AR Assistant for Retail (HoloLens)",
+    "company": "Finger Food / Unity",
+    "years": "2019–2021",
+    "skills": ["Unity", "C#", "AR", "HoloLens", "MRTK", "Jenkins"],
+    "briefDescription": "Designed spatial UI on HoloLens with custom editor tools for designers, solving resource-constrained 3D interaction challenges with linear algebra and calculus.",
+    "description": "World-aware AR UI on the HoloLens, built on Microsoft's Mixed Reality Toolkit at a time when spatial UI conventions were still being invented. The interesting technical challenge was implementing designer visions for 3D UI movement and transitions in a resource-constrained environment, which required direct application of linear algebra and calculus. Also built custom Unity editor tools that let designers and artists work more efficiently in the engine without needing an engineer present.",
+    "thumbnail": "/thumbnails/fingerfood-atg-logo.png"
+  },
+  {
+    "title": "PASS VR Fire Extinguisher Training",
+    "company": "Mammoth XR",
+    "years": "2018",
+    "skills": ["Unreal Engine 4", "VR", "Oculus Go", "Mobile Optimization"],
+    "briefDescription": "Optimized a desktop fire extinguisher training experience for mobile VR on Oculus Go using particle system and pooling techniques for performance-constrained hardware.",
+    "description": "A mobile VR port of a fire extinguisher training experience, originally built for desktop, optimized for Oculus Go in Unreal Engine 4. The core technical challenge was the extinguishing particle system: transparent, overlapping particles are among the most expensive things you can render on constrained mobile hardware. The solution involved object pooling and particle optimization techniques that apply across game engines, and that remain relevant to any real-time 3D work on performance-constrained platforms today.",
+    "thumbnail": "/thumbnails/PASS-VR.png"
+  }
+]

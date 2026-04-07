@@ -1,0 +1,23 @@
+.divider {
+  position: relative;
+  height: 4px;
+  background: #bf9b30;
+  overflow: visible;
+  z-index: 10;
+  /* hidden on desktop */
+  display: none;
+}
+
+.circleWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 11;
+}
+
+@media (max-width: 991px) {
+  .divider {
+    display: block;
+  }
+}
