@@ -19,10 +19,7 @@ A simple single-page application built with React and Bootstrap.
    npm run build
    ```
 
-4. Deploy to GitHub Pages:
-   ```
-   npm run deploy
-   ```
+Deployment is handled automatically by GitHub Actions on every push to `main`. No manual deploy step needed.
 
 ## Features
 
@@ -62,8 +59,3 @@ Check the browser console for errors. Common causes:
 - CSS Modules files must be named `*.module.css`. Plain `.css` files are imported globally and should be imported directly in the component or `index.tsx`.
 - Check that `vite.config.ts` is present at the project root and includes the React plugin.
 
-### `npm run deploy` fails
-
-- The deploy script outputs to `dist/` (not `build/`). Confirm `package.json` has `"deploy": "gh-pages -b main -d dist"`.
-- Make sure the production build succeeds locally (`npm run build`) before deploying.
-- If `gh-pages` reports a branch conflict, delete the remote `main` branch cache: `node_modules/.cache/gh-pages` and retry.
