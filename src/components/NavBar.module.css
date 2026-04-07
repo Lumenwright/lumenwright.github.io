@@ -1,7 +1,5 @@
 .nav {
   position: relative;
-  overflow: visible;
-  z-index: 10;
   background-color: #b39b30;
   color: #1a431f;
 }

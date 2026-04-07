@@ -1,48 +1,24 @@
-import { useState, useRef, useLayoutEffect, useEffect } from 'react';
-
-export type ActiveSection = 'light' | 'dark' | null;
-
-export const SCROLL_DURATION_MS = 600;
-
-// Dark panel starts immediately after the 50vh light panel + 2px divider line.
-const darkScrollTarget = () => window.innerHeight / 2 + 2;
+import { useState, useEffect, useLayoutEffect } from 'react';
 
 export function useSplitScroll() {
-  const [activeSection, setActiveSection] = useState<ActiveSection>(null);
+  const [introProgress, setIntroProgress] = useState(0);
   const [ready, setReady] = useState(false);
-  const mounted = useRef(false);
 
-  // Lock scroll at top before first paint — panels are 50vh each so
-  // the divider lands exactly at the viewport center.
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
-    document.body.style.overflow = 'hidden';
     setReady(true);
   }, []);
 
   useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      return;
+    function handleScroll() {
+      const threshold = window.innerHeight / 2;
+      const progress = Math.min(window.scrollY / threshold, 1);
+      setIntroProgress(progress);
     }
-
-    if (activeSection === null) {
-      document.body.style.overflow = '';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      const t = setTimeout(() => {
-        document.body.style.overflow = 'hidden';
-      }, SCROLL_DURATION_MS);
-      return () => clearTimeout(t);
-    }
-
-    document.body.style.overflow = '';
-    const target = activeSection === 'light' ? 0 : darkScrollTarget();
-    window.scrollTo({ top: target, behavior: 'smooth' });
-  }, [activeSection]);
-
-  useEffect(() => {
-    return () => { document.body.style.overflow = ''; };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  return { activeSection, setActiveSection, ready };
+  const navScrolledAway = introProgress >= 1;
+  return { introProgress, navScrolledAway, ready };
 }

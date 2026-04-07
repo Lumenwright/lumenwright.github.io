@@ -32,24 +32,38 @@ A simple single-page application built with React and Bootstrap.
 
 ## Customization
 
-Edit `src/App.js` to update content and `src/App.css` for styling.
+Edit `src/App.tsx` to update content and `src/App.css` for styling.
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Troubleshooting
 
-### Making a Progressive Web App
+### `npm install` fails with peer dependency errors
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Run `npm install` without any flags. This project uses Vite instead of Create React App, so there are no React version peer dependency conflicts.
 
-### Advanced Configuration
+If you see errors related to `react-scripts`, make sure it has been fully removed from `package.json` — it should not appear in `dependencies` or `devDependencies`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### `npm start` opens a blank page
 
-### Deployment
+Check the browser console for errors. Common causes:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- **Missing root element** — `index.html` at the project root must have `<div id="root"></div>` and `<script type="module" src="/src/index.tsx"></script>`.
+- **`public/index.html` still exists** — delete it. Vite serves from the root `index.html`; a copy in `public/` will overwrite the built output.
 
-### `npm run build` fails to minify
+### `npm run build` fails
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **TypeScript errors** — run `npx tsc --noEmit` to see type errors without building. Fix any reported issues before retrying.
+- **Missing module** — if Vite can't resolve an import, check that the file path and extension are correct. Vite is case-sensitive on all platforms.
+- **JSON import errors** — ensure `resolveJsonModule: true` is set in `tsconfig.json`.
+
+### Styles are missing after build
+
+- CSS Modules files must be named `*.module.css`. Plain `.css` files are imported globally and should be imported directly in the component or `index.tsx`.
+- Check that `vite.config.ts` is present at the project root and includes the React plugin.
+
+### `npm run deploy` fails
+
+- The deploy script outputs to `dist/` (not `build/`). Confirm `package.json` has `"deploy": "gh-pages -b main -d dist"`.
+- Make sure the production build succeeds locally (`npm run build`) before deploying.
+- If `gh-pages` reports a branch conflict, delete the remote `main` branch cache: `node_modules/.cache/gh-pages` and retry.
